@@ -1,155 +1,199 @@
-import { useState } from "react";
-import { StarIcon } from "@heroicons/react/24/solid";
+"use client";
 import { motion } from "framer-motion";
+import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 const testimonials = [
   {
-    name: "Ananya Sharma",
-    role: "Food Blogger",
-    review:
-      "Sustainabite has completely transformed the way I think about food waste. The AI-powered recipe suggestions are spot-on, helping me create delicious meals from ingredients I already have. Love the smooth UI and ease of use!",
+    id: 1,
+    name: "Sarah Johnson",
+    role: "Food Bank Director, NYC Food Rescue",
+    content: "SaveNServe has transformed how we source food donations. We're now receiving 40% more fresh produce with 30% less effort from our team. The automated matching system is a game-changer.",
     rating: 5,
-    img: "https://randomuser.me/api/portraits/women/44.jpg",
+    image: "/images/testimonial-1.jpg"
   },
   {
-    name: "Rahul Verma",
-    role: "Environmental Activist",
-    review:
-      "I've tried several sustainability apps, but Sustainabite stands out with its innovative food donation feature. Now, I can easily share surplus meals with people in need. It's truly a game-changer in reducing food waste!",
+    id: 2,
+    name: "Michael Chen",
+    role: "Sustainability Manager, FreshMart Grocers",
+    content: "In just 3 months using SaveNServe, we've reduced our food waste by 65%. The reporting tools help us demonstrate our sustainability impact to stakeholders.",
     rating: 5,
-    img: "https://randomuser.me/api/portraits/men/32.jpg",
+    image: "/images/testimonial-2.jpg"
   },
   {
-    name: "Priya Kapoor",
-    role: "Nutritionist",
-    review:
-      "The smart meal planning feature is perfect for my clients who struggle with meal prep. Sustainabite helps them plan healthy meals while staying mindful of food sustainability. The real-time alerts are a brilliant touch!",
-    rating: 4.8,
-    img: "https://randomuser.me/api/portraits/women/65.jpg",
+    id: 3,
+    name: "Elena Rodriguez",
+    role: "Community Coordinator, Meals for All",
+    content: "The real-time notifications mean we never miss an opportunity to claim surplus food. We're serving 200 more meals per week thanks to this platform.",
+    rating: 4,
+    image: "/images/testimonial-3.jpg"
   },
   {
-    name: "Amit Desai",
-    role: "Tech Enthusiast",
-    review:
-      "From the sleek design to the AI-powered insights, everything about Sustainabite is top-notch. The global food trends section keeps me updated on sustainability practices worldwide. A must-have for anyone passionate about food and the planet!",
-    rating: 4.9,
-    img: "https://randomuser.me/api/portraits/men/29.jpg",
-  },
+    id: 4,
+    name: "David Wilson",
+    role: "Operations Director, Urban Eats",
+    content: "The logistics coordination features have saved us countless hours. Pickups are now seamless with all documentation handled through the app.",
+    rating: 5,
+    image: "/images/testimonial-4.jpg"
+  }
 ];
 
-const Testimonials = () => {
-  const [hoverIndex, setHoverIndex] = useState(null);
+export default function Testimonials() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextTestimonial = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevTestimonial = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+    );
+  };
 
   return (
-    <section className="py-24 px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-gray-100 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16 relative">
-          <motion.h2 
-            className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-emerald-400"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            Voices of Impact
-          </motion.h2>
-          <motion.p 
-            className="text-xl max-w-2xl mx-auto text-gray-300"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
-          >
-            Discover how Sustainabite is revolutionizing food sustainability through the experiences of our community.
-          </motion.p>
-          
-          {/* Decorative elements */}
-          <div className="absolute -top-10 -left-20 w-40 h-40 rounded-full bg-blue-500/10 blur-3xl"></div>
-          <div className="absolute -bottom-10 -right-20 w-60 h-60 rounded-full bg-emerald-500/10 blur-3xl"></div>
-        </div>
+    <section className="relative py-20 bg-gray-50 overflow-hidden">
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent z-0"></div>
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent z-0"></div>
+      
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            Trusted by <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-600 to-emerald-600">Partners</span>
+          </h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Hear from organizations making real impact with our platform
+          </p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              className={`relative group cursor-pointer rounded-2xl overflow-hidden transition-all duration-500 ${
-                hoverIndex === null || hoverIndex === index ? "opacity-100" : "opacity-40"
-              }`}
-              onMouseEnter={() => setHoverIndex(index)}
-              onMouseLeave={() => setHoverIndex(null)}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.6 }}
-              whileHover={{ scale: 1.03 }}
+        {/* Testimonial carousel */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Navigation arrows */}
+          <button 
+            onClick={prevTestimonial}
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 md:-translate-x-8 z-10 p-2 rounded-full bg-white border border-gray-200 shadow-md hover:bg-gray-50 transition-colors"
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft className="h-5 w-5 text-gray-700" />
+          </button>
+          
+          <button 
+            onClick={nextTestimonial}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 md:translate-x-8 z-10 p-2 rounded-full bg-white border border-gray-200 shadow-md hover:bg-gray-50 transition-colors"
+            aria-label="Next testimonial"
+          >
+            <ChevronRight className="h-5 w-5 text-gray-700" />
+          </button>
+
+          {/* Testimonial cards */}
+          <div className="overflow-hidden">
+            <div 
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-emerald-500/10 backdrop-blur-sm z-0"></div>
-              
-              <div className="relative z-10 h-full p-6 flex flex-col">
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="relative">
-                    <img 
-                      src={testimonial.img} 
-                      alt={testimonial.name} 
-                      className="w-14 h-14 rounded-full border-2 border-white/20 group-hover:border-blue-400 transition-all duration-300" 
-                    />
-                    <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-emerald-400 flex items-center justify-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
-                      </svg>
+              {testimonials.map((testimonial) => (
+                <motion.div
+                  key={testimonial.id}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.6 }}
+                  viewport={{ once: true }}
+                  className="w-full flex-shrink-0 px-4"
+                >
+                  <div className="bg-white rounded-xl border border-gray-200 p-8 md:p-10 shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex flex-col md:flex-row gap-8">
+                      <div className="flex-shrink-0">
+                        <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-teal-100">
+                          <div className="absolute inset-0 bg-gradient-to-br from-teal-100 to-emerald-100"></div>
+                          {/* Replace with actual image */}
+                          <div className="absolute inset-0 flex items-center justify-center text-teal-600 font-bold">
+                            {testimonial.name.charAt(0)}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="flex-1">
+                        <Quote className="h-6 w-6 text-teal-400 mb-4" />
+                        <p className="text-lg text-gray-700 mb-6 italic">
+                          "{testimonial.content}"
+                        </p>
+                        
+                        <div className="mb-4">
+                          <div className="flex items-center gap-1">
+                            {[...Array(5)].map((_, i) => (
+                              <Star 
+                                key={i}
+                                className={`h-5 w-5 ${i < testimonial.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-300'}`}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <h4 className="text-lg font-semibold text-gray-900">{testimonial.name}</h4>
+                          <p className="text-gray-600">{testimonial.role}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">{testimonial.name}</h3>
-                    <p className="text-sm text-gray-300">{testimonial.role}</p>
-                  </div>
-                </div>
-                
-                <p className="text-gray-300 mb-6 flex-grow">{testimonial.review}</p>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <StarIcon 
-                        key={i} 
-                        className={`h-5 w-5 ${i < Math.floor(testimonial.rating) ? 'text-yellow-400' : 'text-gray-500'}`}
-                      />
-                    ))}
-                  </div>
-                  <span className="text-sm font-medium text-gray-400">
-                    {testimonial.rating.toFixed(1)}
-                  </span>
-                </div>
-                
-                {/* Hover effect border */}
-                <div className="absolute inset-0 border border-transparent group-hover:border-blue-400/30 rounded-2xl pointer-events-none transition-all duration-500"></div>
-              </div>
-              
-              {/* Glow effect */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute -top-1 -left-1 w-2 h-2 rounded-full bg-blue-400 blur-md"></div>
-                <div className="absolute -bottom-1 -right-1 w-2 h-2 rounded-full bg-emerald-400 blur-md"></div>
-              </div>
-            </motion.div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Indicator dots */}
+        <div className="flex justify-center gap-2 mt-8">
+          {testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`w-3 h-3 rounded-full transition-colors ${currentIndex === index ? 'bg-teal-600' : 'bg-gray-300'}`}
+              aria-label={`Go to testimonial ${index + 1}`}
+            />
           ))}
         </div>
-        
-        {/* Floating decorative elements */}
-        <div className="absolute left-0 top-1/4 w-20 h-20 rounded-full bg-blue-400/10 blur-xl animate-float"></div>
-        <div className="absolute right-0 bottom-1/3 w-32 h-32 rounded-full bg-emerald-400/10 blur-xl animate-float-delay"></div>
+
+        {/* Partner logos */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="mt-16"
+        >
+          <p className="text-center text-gray-500 mb-6">Trusted by leading organizations</p>
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 opacity-70 hover:opacity-100 transition-opacity">
+            {[
+              { name: "Food Rescue Alliance", logo: "/logos/food-rescue.svg" },
+              { name: "Urban Harvest", logo: "/logos/urban-harvest.svg" },
+              { name: "Community Meals", logo: "/logos/community-meals.svg" },
+              { name: "Green Grocers", logo: "/logos/green-grocers.svg" },
+              { name: "Feed the Future", logo: "/logos/feed-future.svg" }
+            ].map((partner, index) => (
+              <motion.div
+                key={index}
+                whileHover={{ y: -5 }}
+                className="h-10 grayscale hover:grayscale-0 transition-all"
+              >
+                <div className="h-full flex items-center">
+                  {/* Replace with actual logo images */}
+                  <span className="text-gray-400 font-medium">{partner.name}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
-      
-      <style jsx global>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(5deg); }
-        }
-        @keyframes float-delay {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(20px) rotate(-5deg); }
-        }
-        .animate-float { animation: float 8s ease-in-out infinite; }
-        .animate-float-delay { animation: float-delay 10s ease-in-out infinite; }
-      `}</style>
     </section>
   );
-};
-
-export default Testimonials;
+}

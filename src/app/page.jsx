@@ -1,23 +1,20 @@
 "use client";
-
 import Head from "next/head";
 import { motion } from "framer-motion";
 import Typewriter from "typewriter-effect";
-import Image from "next/image";
-import HowItWorks from "@/components/HowItWorks";
+import { Truck, Leaf, Zap, Clock, DollarSign, BarChart2 } from "lucide-react";
+import HowItWorks from "@/components/Howitworks";
 import Features from "@/components/Features";
 import Testimonials from "@/components/Testimonials";
-import SustainabilityTips from "@/components/SustainabilityTips";
-import CommunityContributions from "@/components/CommunityContributions";
+import CommunityImpact from "@/components/CommunityImpact ";
 import Partners from "@/components/Partners";
 import FinalCTA from "@/components/FinalCTA";
-
 const floatingVariants = {
   initial: { y: 0 },
   animate: {
     y: [0, -15, 0],
     transition: {
-      duration: 3,
+      duration: 4,
       repeat: Infinity,
       ease: "easeInOut",
     },
@@ -28,33 +25,21 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Sustainabite - AI-Powered Zero-Waste Recipe Generator</title>
-        <meta name="description" content="Reduce food waste with AI-driven recipes & meal planning. Save money and the planet with personalized sustainable cooking solutions." />
+        <title>SaveNServe - Connecting Food Surplus with Community Needs</title>
+        <meta name="description" content="Reduce food waste by connecting businesses with surplus food to communities in need. Our platform makes food redistribution efficient and impactful." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="relative min-h-screen bg-gradient-to-br from-emerald-900 via-gray-900 to-emerald-900 text-gray-100 overflow-hidden">
+      <main className="relative min-h-screen bg-gray-50 text-gray-900 overflow-hidden">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/grid-pattern.svg')] opacity-10"></div>
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/grid-pattern-light.svg')] opacity-5"></div>
           <motion.div 
-            className="absolute top-20 left-10 w-64 h-64 bg-emerald-500 rounded-full filter blur-3xl opacity-20"
+            className="absolute top-20 left-10 w-64 h-64 bg-teal-100 rounded-full filter blur-3xl opacity-40"
             animate={{
               x: [0, 50, 0],
               y: [0, 30, 0],
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div 
-            className="absolute bottom-10 right-20 w-80 h-80 bg-teal-400 rounded-full filter blur-3xl opacity-15"
-            animate={{
-              x: [0, -40, 0],
-              y: [0, -20, 0],
             }}
             transition={{
               duration: 20,
@@ -62,54 +47,39 @@ export default function Home() {
               ease: "easeInOut",
             }}
           />
-        </div>
-
-        {/* Floating Particles */}
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-emerald-400/30"
-            style={{
-              width: Math.random() * 10 + 5,
-              height: Math.random() * 10 + 5,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
+          <motion.div 
+            className="absolute bottom-10 right-20 w-80 h-80 bg-emerald-100 rounded-full filter blur-3xl opacity-30"
             animate={{
-              y: [0, (Math.random() - 0.5) * 100],
-              x: [0, (Math.random() - 0.5) * 50],
-              opacity: [0.3, 0.8, 0.3],
+              x: [0, -40, 0],
+              y: [0, -20, 0],
             }}
             transition={{
-              duration: Math.random() * 10 + 10,
+              duration: 25,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           />
-        ))}
+        </div>
 
         {/* Hero Section */}
-        <section className="relative flex flex-col md:flex-row items-center justify-between min-h-screen px-6 md:px-12 lg:px-24 max-w-7xl mx-auto py-20">
-          <div className="absolute top-6 right-6 z-50">
-           
-          </div>
-
+        <section className="relative flex flex-col lg:flex-row items-center justify-between min-h-screen px-6 md:px-12 lg:px-24 max-w-7xl mx-auto py-32 lg:py-0">
           {/* Left Content */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="relative z-10 max-w-2xl text-center md:text-left mb-16 md:mb-0"
+            className="relative z-10 max-w-2xl text-center lg:text-left mb-16 lg:mb-0"
           >
-            <div className="inline-block px-4 py-1 mb-4 bg-emerald-800/50 rounded-full backdrop-blur-sm border border-emerald-400/30">
-              <span className="text-emerald-300 text-sm font-medium">AI-Powered Sustainability</span>
+            <div className="inline-flex items-center px-4 py-2 mb-6 bg-teal-50 rounded-full border border-teal-100">
+              <Truck className="h-5 w-5 text-teal-600 mr-2" />
+              <span className="text-teal-700 font-medium">Sustainable Food Redistribution</span>
             </div>
             
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6">
-              <span className="bg-clip-text text-red bg-gradient-to-r from-emerald-300 to-teal-200 ">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-6">
+              <span className="bg-clip-text bg-gradient-to-r from-teal-600 to-emerald-600">
                 <Typewriter
                   options={{
-                    strings: ["Sustainabite", "Zero Waste Recipes", "AI Meal Planning", "Eco Cooking"],
+                    strings: ["SaveNServe", "Reduce Waste", "Feed Communities", "Create Impact"],
                     autoStart: true,
                     loop: true,
                     delay: 70,
@@ -119,48 +89,52 @@ export default function Home() {
               </span>
             </h1>
             
-            <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
-              Transform your leftovers into delicious meals with our AI-powered recipe generator. 
-              Reduce food waste, save money, and cook sustainably with personalized recommendations.
+            <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
+              Connecting businesses with surplus food to communities in need. Our platform makes food redistribution efficient, 
+              transparent, and impactful for a more sustainable future.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(16, 185, 129, 0.5)" }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                className="px-8 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-xl hover:shadow-lg"
+                className="px-8 py-3.5 bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-teal-200"
               >
-                Start Cooking Now
+                Join Our Network
               </motion.button>
               
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                className="px-8 py-3.5 bg-transparent text-white font-semibold rounded-xl border-2 border-emerald-400/50 hover:bg-emerald-900/30 hover:border-emerald-400"
+                className="px-8 py-3.5 bg-white text-gray-700 font-semibold rounded-xl border-2 border-gray-200 hover:border-teal-400 hover:bg-gray-50"
               >
                 How It Works
               </motion.button>
             </div>
             
-            <div className="mt-10 flex items-center justify-center md:justify-start gap-4">
-              <div className="flex -space-x-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-emerald-900 overflow-hidden">
-                    
-                  </div>
-                ))}
+            <div className="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-6">
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-2">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-gray-200 overflow-hidden"></div>
+                  ))}
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-medium text-gray-700">500+ Partners</p>
+                </div>
               </div>
-              <div className="text-left">
-                <div className="flex items-center">
+              
+              <div className="flex items-center gap-2">
+                <div className="flex">
                   {[1, 2, 3, 4, 5].map((i) => (
-                    <svg key={i} className="w-4 h-4 text-yellow-300" fill="currentColor" viewBox="0 0 20 20">
+                    <svg key={i} className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                   ))}
                 </div>
-                <p className="text-sm text-gray-400">Trusted by 10,000+ eco-conscious cooks</p>
+                <p className="text-sm text-gray-600">4.9/5 (1,200+ reviews)</p>
               </div>
             </div>
           </motion.div>
@@ -170,85 +144,141 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative z-10 w-full max-w-lg "
+            className="relative z-10 w-full max-w-xl"
           >
-            <div className="relative bg-gradient-to-br from-gray-900/80 to-emerald-900/50 backdrop-blur-lg rounded-2xl overflow-hidden border border-emerald-400/20 shadow-2xl ">
-              <div className="absolute inset-0 bg-[url('/images/dot-pattern.svg')] opacity-10"></div>
+            <div className="relative bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+              <div className="absolute inset-0 bg-[url('/images/dot-pattern-light.svg')] opacity-5"></div>
               
               <div className="p-8 relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="flex space-x-1">
-                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-3">
+                    <Truck className="h-6 w-6 text-teal-600" />
+                    <span className="text-lg font-semibold text-gray-800">Food Redistribution Dashboard</span>
                   </div>
-                  <div className="text-sm text-emerald-300 font-mono">recipe_generator.exe</div>
-                </div>
-                
-                <div className="mb-8">
-                  <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700/50 mb-4">
-                    <div className="text-emerald-400 text-sm font-mono mb-2">Input Ingredients:</div>
-                    <div className="flex flex-wrap gap-2">
-                      {['chicken', 'tomatoes', 'basil', 'pasta', 'cheese'].map((ingredient) => (
-                        <span key={ingredient} className="px-3 py-1 bg-emerald-900/30 text-emerald-200 rounded-full text-xs">
-                          {ingredient}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700/50">
-                    <div className="text-emerald-400 text-sm font-mono mb-2">Generated Recipe:</div>
-                    <h3 className="text-xl font-bold text-white mb-2">Creamy Tomato Basil Pasta</h3>
-                    <p className="text-gray-300 text-sm mb-3">Estimated waste reduction: 85%</p>
-                    <div className="flex items-center gap-2 text-xs text-gray-400">
-                      <span>⏱️ 25 mins</span>
-                      <span>🍽️ 4 servings</span>
-                      <span>🌱 2.3kg CO₂ saved</span>
-                    </div>
+                  <div className="flex space-x-2">
+                    <div className="w-3 h-3 rounded-full bg-gray-300"></div>
+                    <div className="w-3 h-3 rounded-full bg-gray-300"></div>
+                    <div className="w-3 h-3 rounded-full bg-gray-300"></div>
                   </div>
                 </div>
                 
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="mt-1 p-2 bg-emerald-900/30 rounded-lg">
-                      <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-white">AI-Powered Suggestions</h4>
-                      <p className="text-gray-400 text-sm">Get creative recipes tailored to your ingredients</p>
+                  <div className="bg-teal-50 rounded-xl p-5 border border-teal-100">
+                    <div className="flex items-start gap-4">
+                      <div className="p-2 bg-teal-100 rounded-lg">
+                        <Leaf className="h-5 w-5 text-teal-600" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-gray-800 mb-1">Today's Surplus</h3>
+                        <p className="text-gray-600 text-sm">Fresh produce available for redistribution</p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {['Vegetables', 'Bakery', 'Dairy', 'Prepared Meals'].map((category) => (
+                            <span key={category} className="px-3 py-1 bg-white text-teal-700 rounded-full text-xs font-medium border border-teal-100">
+                              {category}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
-                  <div className="flex items-start gap-4">
-                    <div className="mt-1 p-2 bg-emerald-900/30 rounded-lg">
-                      <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                      </svg>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Zap className="h-4 w-4 text-emerald-500" />
+                        <span className="text-xs font-medium text-gray-700">IMPACT</span>
+                      </div>
+                      <p className="text-2xl font-bold text-gray-900">1.2M lbs</p>
+                      <p className="text-xs text-gray-500">Food saved this month</p>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-white">Save Money</h4>
-                      <p className="text-gray-400 text-sm">Reduce grocery bills by using what you already have</p>
+                    
+                    <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                      <div className="flex items-center gap-3 mb-2">
+                        <Clock className="h-4 w-4 text-teal-500" />
+                        <span className="text-xs font-medium text-gray-700">TIME SAVED</span>
+                      </div>
+                      <p className="text-2xl font-bold text-gray-900">4,200+ hrs</p>
+                      <p className="text-xs text-gray-500">For our partners</p>
                     </div>
+                  </div>
+                  
+                  <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <BarChart2 className="h-4 w-4 text-teal-500" />
+                        <span className="text-xs font-medium text-gray-700">COMMUNITY IMPACT</span>
+                      </div>
+                      <span className="text-xs px-2 py-1 bg-teal-100 text-teal-700 rounded-full">Live</span>
+                    </div>
+                    <div className="flex items-end gap-2 h-24">
+                      {[30, 60, 90, 120, 90, 60, 30].map((height, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ height: 0 }}
+                          animate={{ height: `${height}%` }}
+                          transition={{ duration: 0.8, delay: i * 0.1 }}
+                          className={`flex-1 rounded-t-sm ${
+                            i % 2 === 0 ? 'bg-teal-400' : 'bg-teal-300'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-xs text-gray-500 mt-2">Meals distributed last week</p>
                   </div>
                 </div>
               </div>
               
-              <div className="bg-gray-900/50 border-t border-gray-800 p-4 flex justify-between items-center">
-                <div className="text-xs text-gray-500">Sustainabite AI v2.4</div>
+              <div className="bg-gray-50 border-t border-gray-200 p-4 flex justify-between items-center">
+                <div className="text-xs text-gray-500">SaveNServe Platform v3.2</div>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-4 py-2 bg-emerald-600/70 hover:bg-emerald-600 text-white text-sm rounded-lg transition-all"
+                  className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-sm rounded-lg transition-all"
                 >
-                  Generate New Recipe
+                  View Available Surplus
                 </motion.button>
               </div>
             </div>
           </motion.div>
         </section>
+
+        {/* Stats Section */}
+        <section className="relative py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                { value: "5M+", label: "Pounds of food saved", icon: <Leaf className="h-6 w-6 text-teal-600" /> },
+                { value: "2.1M", label: "Meals provided", icon: <DollarSign className="h-6 w-6 text-teal-600" /> },
+                { value: "850+", label: "Partner organizations", icon: <Truck className="h-6 w-6 text-teal-600" /> },
+                { value: "72", label: "Communities served", icon: <Zap className="h-6 w-6 text-teal-600" /> }
+              ].map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-teal-300 transition-colors"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-teal-50 rounded-lg">
+                      {stat.icon}
+                    </div>
+                    <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
+                  </div>
+                  <p className="text-gray-600">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+        {/* Rest of your components */}
+        <HowItWorks />
+        <Features />
+        <Testimonials />
+        <CommunityImpact />
+        <Partners />
+        <FinalCTA />
 
         {/* Animated Scroll Indicator */}
         <motion.div
@@ -262,21 +292,12 @@ export default function Home() {
             transition={{ duration: 1.5, repeat: Infinity }}
             className="flex flex-col items-center justify-center"
           >
-            <p className="text-sm text-gray-400 mb-2">Scroll to explore</p>
-            <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <p className="text-sm text-gray-500 mb-2">Scroll to explore</p>
+            <svg className="w-6 h-6 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>
           </motion.div>
         </motion.div>
-
-        {/* Rest of your components */}
-        <HowItWorks />
-        <Features />
-        <Testimonials />
-        <SustainabilityTips />
-        <CommunityContributions />
-        <Partners />
-        <FinalCTA />
       </main>
     </>
   );

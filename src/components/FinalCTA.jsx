@@ -1,190 +1,187 @@
-import { useState, useEffect } from "react";
+"use client";
 import { motion } from "framer-motion";
+import { ArrowRight, Leaf, Zap, Users } from "lucide-react";
 
 export default function FinalCTA() {
-  // Countdown Timer (For limited-time meal plans)
-  const [timeLeft, setTimeLeft] = useState(600);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const formatTime = (seconds) => {
-    const minutes = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
-  };
-
-  // Floating food icons
-  const foodIcons = ["🍎", "🥑", "🍋", "🥦", "🍒", "🍇", "🥕", "🍊"];
-  const floatingElements = foodIcons.map((icon, i) => ({
-    id: i,
-    icon,
-    x: Math.random() * 100,
-    size: 24 + Math.random() * 16,
-    delay: Math.random() * 5,
-    duration: 10 + Math.random() * 10,
-    opacity: 0.2 + Math.random() * 0.3,
-  }));
-
   return (
-    <div className="relative py-28 px-6 bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white text-center overflow-hidden">
-      {/* Floating food elements */}
-      {floatingElements.map((element) => (
-        <motion.div
-          key={element.id}
-          initial={{ 
-            y: -50,
-            x: element.x,
-            opacity: 0,
-            rotate: Math.random() * 360
-          }}
-          animate={{ 
-            y: "100vh",
-            opacity: [0, element.opacity, 0],
-            rotate: 360
-          }}
-          transition={{
-            duration: element.duration,
-            delay: element.delay,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute pointer-events-none"
-          style={{
-            left: `${element.x}%`,
-            fontSize: `${element.size}px`,
-          }}
-        >
-          {element.icon}
-        </motion.div>
-      ))}
-
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-orange-500/10 to-emerald-500/10 pointer-events-none"></div>
-
-      <div className="max-w-4xl mx-auto relative z-10">
-        {/* CTA Heading */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          viewport={{ once: true }}
-        >
-          <span className="text-sm font-medium text-orange-400 mb-2 inline-block">
-            JOIN THE FOOD REVOLUTION
-          </span>
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-emerald-400">
-            Transform Your Meals Today
-          </h2>
-        </motion.div>
-
-        {/* CTA Subtext */}
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-xl text-gray-300 max-w-2xl mx-auto mb-8"
-        >
-          Discover chef-curated recipes, personalized meal plans, and sustainable eating habits that will revolutionize your kitchen.
-        </motion.p>
-
-        {/* Countdown Timer for Special Offer */}
-        {timeLeft > 0 && (
+    <section className="relative py-24 bg-gradient-to-br from-teal-50 to-emerald-50 overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 overflow-hidden opacity-20">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/grid-pattern-light.svg')]"></div>
+      </div>
+      <motion.div 
+        className="absolute top-1/3 left-1/4 w-80 h-80 bg-teal-100 rounded-full filter blur-3xl opacity-30"
+        animate={{
+          x: [0, 40, 0],
+          y: [0, 30, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div 
+        className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-emerald-100 rounded-full filter blur-3xl opacity-30"
+        animate={{
+          x: [0, -30, 0],
+          y: [0, -20, 0],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="relative z-10 text-center">
+          {/* Section header */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="inline-block mb-10"
+            className="mb-12"
           >
-            <div className="relative">
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-500 to-emerald-500 blur-md opacity-70"></div>
-              <div className="relative bg-gray-800 px-8 py-4 rounded-xl text-lg font-bold text-white border border-gray-700">
-                <span className="text-orange-300">Limited-time offer:</span> {formatTime(timeLeft)} remaining
-              </div>
-            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
+              Ready to <span className="text-teal-600">make a difference</span> in your community?
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+              Join thousands of individuals and businesses already creating impact through food redistribution.
+            </p>
           </motion.div>
-        )}
 
-        {/* CTA Buttons */}
+          {/* Impact stats */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, staggerChildren: 0.1 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-16 max-w-4xl mx-auto"
+          >
+            {[
+              { icon: <Leaf className="h-6 w-6 text-teal-600" />, value: "5M+", label: "Pounds saved" },
+              { icon: <Zap className="h-6 w-6 text-teal-600" />, value: "2.1M", label: "Meals provided" },
+              { icon: <Users className="h-6 w-6 text-teal-600" />, value: "850+", label: "Partners" }
+            ].map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white/50 backdrop-blur-sm rounded-xl p-6 border border-gray-200/50 hover:border-teal-300 transition-colors"
+              >
+                <div className="flex items-center justify-center w-12 h-12 mb-4 bg-teal-50 rounded-lg mx-auto">
+                  {stat.icon}
+                </div>
+                <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                <p className="text-gray-600">{stat.label}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* CTA buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            viewport={{ once: true }}
+            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="px-8 py-4 bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-teal-200 flex items-center justify-center gap-2"
+            >
+              Get Started Now
+              <ArrowRight className="h-5 w-5" />
+            </motion.button>
+            
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="px-8 py-4 bg-white text-gray-700 font-semibold rounded-xl border-2 border-gray-200 hover:border-teal-400 hover:bg-gray-50"
+            >
+              Schedule a Demo
+            </motion.button>
+          </motion.div>
+
+          {/* Additional info */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="text-gray-500 text-sm"
+          >
+            <p>No credit card required • Setup in minutes • Cancel anytime</p>
+          </motion.div>
+        </div>
+
+        {/* Floating food icons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.8 }}
-          viewport={{ once: true }}
-          className="flex flex-col sm:flex-row justify-center gap-4"
+          className="absolute bottom-10 left-10 w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center"
+          variants={{
+            initial: { y: 0 },
+            animate: {
+              y: [0, -15, 0],
+              transition: {
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
+            },
+          }}
+          initial="initial"
+          animate="animate"
         >
-          <motion.a
-            href="/explore-meals"
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: "0 10px 25px -5px rgba(251, 146, 60, 0.4)"
-            }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            className="px-8 py-4 rounded-xl text-lg font-bold bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-400 hover:to-orange-500 transition-all duration-300 flex items-center justify-center gap-2"
-          >
-            <span>Explore Meals</span>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
-            </svg>
-          </motion.a>
-
-          <motion.a
-            href="/subscribe"
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: "0 10px 25px -5px rgba(16, 185, 129, 0.4)"
-            }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 300, damping: 15 }}
-            className="px-8 py-4 rounded-xl text-lg font-bold bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 transition-all duration-300 flex items-center justify-center gap-2 border border-gray-700"
-          >
-            <span>Get Premium</span>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-5V9a1 1 0 10-2 0v1H4a2 2 0 110-4h1.17C5.06 5.687 5 5.35 5 5zm4 1V5a1 1 0 10-1 1h1zm3 0a1 1 0 10-1-1v1h1z" clipRule="evenodd" />
-            </svg>
-          </motion.a>
+          <span className="text-2xl">🍎</span>
         </motion.div>
-
-        {/* Trust indicators */}
+        
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          viewport={{ once: true }}
-          className="mt-16 flex flex-col items-center"
+          className="absolute top-20 right-16 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center"
+          variants={{
+            initial: { y: 0 },
+            animate: {
+              y: [0, -20, 0],
+              transition: {
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.5,
+              },
+            },
+          }}
+          initial="initial"
+          animate="animate"
         >
-          <div className="flex items-center space-x-4 text-gray-400 mb-4">
-            <div className="w-12 h-px bg-gradient-to-r from-transparent to-gray-600"></div>
-            <span className="text-sm">TRUSTED BY FOOD LOVERS WORLDWIDE</span>
-            <div className="w-12 h-px bg-gradient-to-r from-gray-600 to-transparent"></div>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            <div className="flex items-center">
-              <div className="text-orange-400 mr-2">★ ★ ★ ★ ★</div>
-              <span className="text-sm">4.9/5 Rating</span>
-            </div>
-            <div className="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-emerald-400 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm">100% Organic Recipes</span>
-            </div>
-            <div className="flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-emerald-400 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm">Chef-Approved</span>
-            </div>
-          </div>
+          <span className="text-xl">🥖</span>
+        </motion.div>
+        
+        <motion.div
+          className="absolute bottom-24 right-24 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center"
+          variants={{
+            initial: { y: 0 },
+            animate: {
+              y: [0, -10, 0],
+              transition: {
+                duration: 3.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1,
+              },
+            },
+          }}
+          initial="initial"
+          animate="animate"
+        >
+          <span className="text-lg">🥦</span>
         </motion.div>
       </div>
-    </div>
+    </section>
   );
 }
