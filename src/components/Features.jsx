@@ -1,81 +1,139 @@
+"use client";
 import { useState } from "react";
-import { SparklesIcon, CalendarIcon, HeartIcon, LightBulbIcon, ChartBarIcon, GlobeAltIcon } from "@heroicons/react/24/solid";
+import { 
+  SparklesIcon, 
+  CalendarIcon, 
+  HeartIcon, 
+  LightBulbIcon, 
+  ChartBarIcon, 
+  GlobeAltIcon 
+} from "@heroicons/react/24/solid";
+import { motion } from "framer-motion";
 
 const features = [
   {
-    title: "AI-Powered Recipe Suggestions",
-    description:
-      "With our cutting-edge AI, effortlessly generate recipes based on ingredients you already have. No more last-minute grocery runs—get personalized meal ideas tailored to your preferences, dietary restrictions, and cooking skills!",
-    icon: <SparklesIcon className="h-12 w-12 text-green-400" />,
-    glow: "shadow-green-500/50",
+    title: "AI-Powered Recipes",
+    description: "Get personalized recipe suggestions based on your pantry items, dietary needs, and cooking preferences.",
+    icon: <SparklesIcon className="h-8 w-8 text-green-400" />,
+    color: "bg-gradient-to-br from-green-500 to-emerald-600",
   },
   {
     title: "Smart Meal Planning",
-    description:
-      "Plan your weekly meals like a pro! Our meal planner ensures balanced nutrition while minimizing food waste. Get optimized grocery lists, track calorie intake, and discover time-saving batch cooking strategies.",
-    icon: <CalendarIcon className="h-12 w-12 text-blue-400" />,
-    glow: "shadow-blue-500/50",
+    description: "Automated weekly meal plans with optimized grocery lists and nutrition tracking.",
+    icon: <CalendarIcon className="h-8 w-8 text-blue-400" />,
+    color: "bg-gradient-to-br from-blue-500 to-cyan-600",
   },
   {
-    title: "Food Donation & Sharing",
-    description:
-      "Got surplus food? Easily donate extra meals to those in need with our integrated donation network. Connect with local food banks or share excess food with neighbors to combat food waste and hunger.",
-    icon: <HeartIcon className="h-12 w-12 text-red-400" />,
-    glow: "shadow-red-500/50",
+    title: "Food Sharing Network",
+    description: "Connect with local communities to share surplus food and reduce waste.",
+    icon: <HeartIcon className="h-8 w-8 text-pink-400" />,
+    color: "bg-gradient-to-br from-pink-500 to-rose-600",
   },
   {
-    title: "Sustainability Insights",
-    description:
-      "Understand your food consumption impact with real-time analytics. Track carbon footprint reduction, analyze waste patterns, and receive actionable tips to adopt a more sustainable lifestyle.",
-    icon: <ChartBarIcon className="h-12 w-12 text-purple-400" />,
-    glow: "shadow-purple-500/50",
+    title: "Sustainability Analytics",
+    description: "Track your environmental impact with detailed carbon footprint reports.",
+    icon: <ChartBarIcon className="h-8 w-8 text-purple-400" />,
+    color: "bg-gradient-to-br from-purple-500 to-fuchsia-600",
   },
   {
     title: "Global Food Trends",
-    description:
-      "Stay updated with the latest trends in sustainable eating. Explore global innovations in eco-friendly packaging, plant-based diets, and zero-waste cooking techniques.",
-    icon: <GlobeAltIcon className="h-12 w-12 text-yellow-400" />,
-    glow: "shadow-yellow-500/50",
+    description: "Discover the latest innovations in sustainable cooking worldwide.",
+    icon: <GlobeAltIcon className="h-8 w-8 text-amber-400" />,
+    color: "bg-gradient-to-br from-amber-500 to-yellow-600",
   },
   {
-    title: "AI-Driven Smart Alerts",
-    description:
-      "Receive real-time notifications for expiring food items, best deals on organic groceries, and local sustainability events. Never let good food go to waste again!",
-    icon: <LightBulbIcon className="h-12 w-12 text-teal-400" />,
-    glow: "shadow-teal-500/50",
+    title: "Smart Notifications",
+    description: "Get alerts for expiring food and local sustainability events.",
+    icon: <LightBulbIcon className="h-8 w-8 text-teal-400" />,
+    color: "bg-gradient-to-br from-teal-500 to-emerald-600",
   },
 ];
+
+const FeatureCard = ({ feature, isExpanded, onClick, index }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1 }}
+      viewport={{ once: true }}
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onClick}
+      className={`relative overflow-hidden rounded-2xl cursor-pointer p-0.5 ${feature.color}`}
+    >
+      <div className={`h-full p-6 rounded-[calc(1rem-2px)] bg-gray-900 transition-all duration-300 ${isExpanded ? "bg-gray-800" : ""}`}>
+        <div className="flex items-start gap-4">
+          <div className={`p-3 rounded-lg ${feature.color.replace('bg-gradient-to-br', 'bg-gradient-to-tr')} bg-opacity-20`}>
+            {feature.icon}
+          </div>
+          <div>
+            <h3 className="text-xl font-bold text-white">{feature.title}</h3>
+            <motion.p
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ 
+                height: isExpanded ? "auto" : 0,
+                opacity: isExpanded ? 1 : 0
+              }}
+              transition={{ duration: 0.3 }}
+              className="mt-2 text-gray-300 overflow-hidden"
+            >
+              {feature.description}
+            </motion.p>
+          </div>
+        </div>
+        {isExpanded && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent"
+          />
+        )}
+      </div>
+    </motion.div>
+  );
+};
 
 const Features = () => {
   const [expanded, setExpanded] = useState(null);
 
   return (
-    <section className="py-24 px-6 bg-gradient-to-br from-blue-400 via-gray-900 to-black text-gray-100">
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-6 animate-fadeIn">🌍 Transform Your Food Habits</h2>
-        <p className="mb-12 text-lg opacity-90 animate-fadeIn delay-200">
-          Sustainabite empowers you with AI-driven tools to optimize your food choices, minimize waste, and embrace sustainability.
-        </p>
+    <section className="relative py-20 overflow-hidden bg-gray-950">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden opacity-20">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/grid-pattern.svg')]"></div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-teal-500 to-emerald-600 text-white text-sm font-medium mb-4">
+            <SparklesIcon className="h-4 w-4 mr-2" />
+            INNOVATIVE FEATURES
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-300 to-teal-200">
+              Smart Kitchen Revolution
+            </span>
+          </h2>
+          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+            AI-powered tools to transform your cooking and reduce waste
+          </p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-10 animate-slideUp">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
-            <div
+            <FeatureCard
               key={index}
+              feature={feature}
+              isExpanded={expanded === index}
               onClick={() => setExpanded(expanded === index ? null : index)}
-              className={`relative cursor-pointer bg-gray-800 bg-opacity-60 backdrop-blur-lg p-8 rounded-xl transition-all duration-300 hover:scale-105 hover:bg-opacity-90 shadow-lg ${feature.glow} ${
-                expanded === index ? "bg-opacity-100 scale-110" : ""
-              }`}
-            >
-              {feature.icon}
-              <h3 className="text-2xl font-semibold mt-4">{feature.title}</h3>
-              <p
-                className={`mt-4 transition-all duration-300 text-gray-300 ${
-                  expanded === index ? "opacity-100 max-h-96" : "opacity-0 max-h-0 overflow-hidden"
-                }`}
-              >
-                {feature.description}
-              </p>
-            </div>
+              index={index}
+            />
           ))}
         </div>
       </div>
