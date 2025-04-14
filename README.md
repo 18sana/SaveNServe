@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+)
+🚀 XRPL Integration in Sustainabite
+Sustainabite leverages the XRP Ledger (XRPL) for a secure, efficient, and transparent food donation and distribution system.
 
-## Getting Started
+🔹 Key XRPL Features Used in Sustainabite:
+1️⃣ Decentralized Food Tokenization
 
-First, run the development server:
+Converts surplus food donations into digital tokens on XRPL.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Ensures traceability and prevents fraud.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2️⃣ Instant & Low-Cost Transactions
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+XRPL enables real-time, low-cost fund transfers to NGOs and food suppliers.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Ensures seamless and eco-friendly microtransactions.
 
-## Learn More
+3️⃣ Immutable Blockchain Records
 
-To learn more about Next.js, take a look at the following resources:
+Every transaction is securely recorded on XRPL.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Ensures tamper-proof transparency and regulatory compliance.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4️⃣ Smart Contract Automation
 
-## Deploy on Vercel
+Automates food voucher distribution and payment processing.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Eliminates middlemen, ensuring efficient and fair allocation.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5️⃣ Real-Time Monitoring & Reporting
+
+Provides a dashboard with live tracking of donations and beneficiaries.
+
+Uses AI-driven analytics for fraud detection and optimization.
+
