@@ -31,7 +31,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="relative min-h-screen bg-gray-50 text-gray-900 overflow-hidden">
+      <main className="relative min-h-screen bg-gray-50 text-gray-900 overflow-hidden ">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/grid-pattern-light.svg')] opacity-5"></div>
@@ -146,7 +146,7 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative z-10 w-full max-w-xl"
           >
-            <div className="relative bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+            <div className="relative bg-white rounded-2xl overflow-hidden border border-gray-200 shadow-xl hover:shadow-2xl transition-shadow duration-300 mt-20">
               <div className="absolute inset-0 bg-[url('/images/dot-pattern-light.svg')] opacity-5"></div>
               
               <div className="p-8 relative z-10">
