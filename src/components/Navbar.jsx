@@ -12,21 +12,29 @@ export default function Navbar() {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
+    // Check for token in cookies (more secure than localStorage)
+    const checkAuth = () => {
+      const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+      setIsLoggedIn(!!token);
+    };
+
+    checkAuth();
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
+    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    // Clear cookie and state
+    document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     setIsLoggedIn(false);
     setIsOpen(false);
     router.push("/");
+    router.refresh(); // Ensure the page updates
   };
 
   const navItems = [
@@ -41,15 +49,13 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: [0.25, 1, 0.5, 1] }}
-      className={`fixed top-0 w-full z-50 ${
-        isScrolled ? "bg-gray-900/95 backdrop-blur-xl shadow-sm" : "bg-gray-900/90 backdrop-blur-lg"
-      } transition-all duration-300 border-b border-gray-800`}
+      className={`fixed top-0 w-full z-50 ${isScrolled ? "bg-gray-900/95 backdrop-blur-xl shadow-sm" : "bg-gray-900/90 backdrop-blur-lg"} transition-all duration-300 border-b border-gray-800`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex justify-between items-center h-16">
-          {/* Logo with animation */}
-          <motion.div 
-            whileHover={{ scale: 1.05 }} 
+          {/* Logo */}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex items-center"
           >
@@ -107,10 +113,7 @@ export default function Navbar() {
                 </Link>
                 <Link href="/signup">
                   <motion.button
-                    whileHover={{ 
-                      scale: 1.03,
-                      boxShadow: "0 4px 14px rgba(110, 231, 183, 0.2)"
-                    }}
+                    whileHover={{ scale: 1.03, boxShadow: "0 4px 14px rgba(110, 231, 183, 0.2)" }}
                     whileTap={{ scale: 0.97 }}
                     className="px-5 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-500 transition-all font-medium"
                   >
@@ -129,11 +132,7 @@ export default function Navbar() {
             className="lg:hidden p-2 rounded-lg hover:bg-gray-800 text-gray-200"
             aria-label="Menu"
           >
-            {isOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </motion.button>
         </div>
       </div>
@@ -158,11 +157,7 @@ export default function Navbar() {
               <div className="pt-2 border-t border-gray-800 mt-2">
                 {isLoggedIn ? (
                   <div className="space-y-2">
-                    <MobileNavLink 
-                      href="/dashboard" 
-                      setIsOpen={setIsOpen} 
-                      className="flex items-center gap-3 text-gray-200"
-                    >
+                    <MobileNavLink href="/dashboard" setIsOpen={setIsOpen} className="flex items-center gap-3 text-gray-200">
                       <div className="p-1.5 rounded-full bg-teal-900/30">
                         <User className="h-4 w-4 text-teal-400" />
                       </div>

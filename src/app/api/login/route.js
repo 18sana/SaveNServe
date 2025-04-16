@@ -1,89 +1,82 @@
-// // app/api/login/route.js
-// import connectDB from "@/lib/mongodb";
-// import User from "@/models/User";
-// import { NextResponse } from "next/server";
-// import bcrypt from "bcryptjs";
-
-// export async function POST(req) {
-//   try {
-//     await connectDB();
-//     const { email, password } = await req.json();
-
-//     const user = await User.findOne({ email });
-
-//     if (!user) {
-//       return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
-//     }
-
-//     const isMatch = await bcrypt.compare(password, user.password);
-
-//     if (!isMatch) {
-//       return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
-//     }
-
-//     // We'll add JWT here in the next step
-//     return NextResponse.json({ message: "Login successful", user }, { status: 200 });
-
-//   } catch (error) {
-//     console.error("Login error:", error);
-//     return NextResponse.json({ message: "Server error" }, { status: 500 });
-//   }
-// }
-// app/api/login/route.js
-// app/api/login/route.js
+import { NextResponse } from "next/server";
 import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
-import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken"; // ✅ Import JWT
-
-const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret_key"; // 🔐 Use .env
+import { SignJWT } from 'jose';
 
 export async function POST(req) {
   try {
     await connectDB();
-    const { email, password } = await req.json();
+    const { email, password, rememberMe } = await req.json();
 
-    const user = await User.findOne({ email });
+    if (!email || !password) {
+      return NextResponse.json(
+        { message: "Email and password are required" },
+        { status: 400 }
+      );
+    }
 
+    const user = await User.findOne({ email }).select("+password");
     if (!user) {
-      return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Invalid email or password" },
+        { status: 401 }
+      );
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
-      return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Invalid email or password" },
+        { status: 401 }
+      );
     }
 
-    // ✅ Create JWT token with user ID and email
-    const token = jwt.sign(
-      {
-        id: user._id,
-        email: user.email,
-      },
-      JWT_SECRET,
-      { expiresIn: "7d" } // ⏳ optional: token valid for 7 days
-    );
+    // Create JWT token
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const token = await new SignJWT({ 
+      id: user._id,
+      email: user.email,
+      role: user.role 
+    })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setExpirationTime(rememberMe ? '30d' : '1d')
+      .sign(secret);
 
-    // ✅ Return token with response
-    return NextResponse.json(
-      {
-        message: "Login successful",
-        token,
+    const userWithoutPassword = user.toObject();
+    delete userWithoutPassword.password;
+
+    const response = NextResponse.json(
+      { 
+        message: "Login successful", 
         user: {
           id: user._id,
           name: user.name,
           email: user.email,
-        },
+          role: user.role,
+          organization: user.organization
+        } 
       },
       { status: 200 }
     );
+
+    // Set cookie
+    response.cookies.set({
+      name: 'token',
+      value: token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60, // 30 days or 1 day
+      path: '/',
+    });
+
+    return response;
   } catch (error) {
     console.error("Login error:", error);
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Server error, please try again later" },
+      { status: 500 }
+    );
   }
 }
-
-
-

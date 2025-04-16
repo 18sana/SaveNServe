@@ -1,32 +1,54 @@
-// middleware.js
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
-const PUBLIC_PATHS = ['/', '/login', '/signup'];
-
-export async function middleware(req) {
-  const { pathname } = req.nextUrl;
-
-  if (PUBLIC_PATHS.includes(pathname)) {
-    return NextResponse.next(); // allow public routes
-  }
-
-  const token = req.cookies.get('token')?.value;
-
-  if (!token) {
-    return NextResponse.redirect(new URL('/login', req.url));
-  }
+export async function middleware(request) {
+  const path = request.nextUrl.pathname;
+  const isPublicPath = path === '/login' || path === '/register' || path === '/forgot-password';
+  const token = request.cookies.get('token')?.value || '';
 
   try {
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-    await jwtVerify(token, secret);
-    return NextResponse.next(); // token is valid
-  } catch (err) {
-    console.log("JWT verification failed:", err);
-    return NextResponse.redirect(new URL('/login', req.url));
+    // Redirect logic for protected paths
+    if (!isPublicPath && !token) {
+      return NextResponse.redirect(new URL('/login', request.nextUrl));
+    }
+
+    // If token exists, verify it
+    if (token) {
+      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+      const { payload } = await jwtVerify(token, secret);
+
+      // Redirect authenticated users away from public paths
+      if (isPublicPath) {
+        return NextResponse.redirect(new URL(`/dashboard/${payload.role}`, request.nextUrl));
+      }
+
+      // Handle dashboard access
+      if (path === '/dashboard' || path === '/dashboard/') {
+        return NextResponse.redirect(new URL(`/dashboard/${payload.role}`, request.nextUrl));
+      }
+
+      // Prevent access to other role's dashboards
+      if (path.startsWith('/dashboard/') && !path.includes(payload.role)) {
+        return NextResponse.redirect(new URL(`/dashboard/${payload.role}`, request.nextUrl));
+      }
+    }
+
+    return NextResponse.next();
+  } catch (error) {
+    console.error('Middleware error:', error);
+    const response = NextResponse.redirect(new URL('/login', request.nextUrl));
+    response.cookies.delete('token');
+    return response;
   }
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/profile/:path*'] // routes to protect
+  matcher: [
+    '/',
+    '/dashboard',
+    '/dashboard/:path*',
+    '/login',
+    '/register',
+    '/forgot-password',
+  ],
 };
