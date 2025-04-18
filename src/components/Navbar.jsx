@@ -94,6 +94,17 @@ export default function Navbar() {
               </motion.button>
             </Link>
 
+            <Link href="/prediction">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center gap-2 px-4 py-2 bg-amber-900/30 hover:bg-amber-900/50 text-amber-400 rounded-lg transition-colors font-medium"
+              >
+                <ScanEye className="h-4 w-4" />
+                <span>AI Prediction</span>
+              </motion.button>
+            </Link>
+
             {/* Chat with Assistant Button */}
             <Link href="/chat">
               <motion.button
@@ -180,6 +191,11 @@ export default function Navbar() {
                   {item.name}
                 </MobileNavLink>
               ))}
+
+              <MobileNavLink href="/prediction" setIsOpen={setIsOpen} className="flex items-center gap-3 text-amber-400">
+                <ScanEye className="h-4 w-4" />
+                AI Prediction
+              </MobileNavLink>
 
               {/* Mobile AgriCheck Button */}
               <MobileNavLink href="/agricheck" setIsOpen={setIsOpen} className="flex items-center gap-3 text-amber-400">
