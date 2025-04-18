@@ -1,85 +1,359 @@
 "use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { jwtVerify } from "jose";
+import Head from "next/head";
+import { motion } from "framer-motion";
+import { Users, HeartHandshake, Package, Calendar, AlertCircle, CheckCircle2, MapPin, Clock, BarChart2, Settings, LogOut } from "lucide-react";
+import Link from "next/link";
 
-export default function FarmerDashboard() {
-  const router = useRouter();
+const floatingVariants = {
+  initial: { y: 0 },
+  animate: {
+    y: [0, -15, 0],
+    transition: {
+      duration: 4,
+      repeat: Infinity,
+      ease: "easeInOut",
+    },
+  },
+};
 
-  useEffect(() => {
-    async function verifyToken() {
-      const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
-      if (!token) {
-        router.push('/login');
-        return;
-      }
-
-      try {
-        const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
-        const { payload } = await jwtVerify(token, secret);
-        
-        // Verify role
-        if (payload.role !== 'farmer') {
-          router.push(`/dashboard/${payload.role}`);
-        }
-      } catch (error) {
-        console.error('Token verification failed:', error);
-        router.push('/login');
-      }
-    }
-
-    verifyToken();
-  }, [router]);
-
+export default function NGODashboard() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <h1 className="text-3xl font-bold text-teal-600 p-8">Farmer Dashboard</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, omnis incidunt quasi doloremque voluptatum doloribus aperiam? Rem soluta atque sint officiis! Libero magnam magni itaque, neque cumque eos ducimus cum?
-      Ea recusandae in, nulla quidem quasi, aspernatur maiores dignissimos corrupti dolore dolor accusamus velit distinctio cumque nihil quia ad iure reiciendis eum atque, porro libero consequatur! Voluptates obcaecati perspiciatis ut!
-      Error quos nulla totam eius sit ab, minus impedit accusantium commodi unde, quisquam reprehenderit excepturi. Eveniet, saepe officia optio non voluptates possimus pariatur impedit ipsum consectetur, consequuntur aut rem vitae?
-      Eius odio reiciendis consequatur consequuntur suscipit adipisci voluptas, exercitationem placeat explicabo quasi eos temporibus iure veritatis optio nulla dolore deserunt sed quod sint? Error culpa architecto quos beatae numquam reprehenderit.
-      Corrupti facere, aliquam eum natus laborum odio assumenda culpa ab maiores deserunt accusamus dignissimos accusantium necessitatibus dolores dolor, nisi reprehenderit magni? In mollitia ab laudantium, hic repellendus saepe optio enim!
-      Fuga suscipit, quisquam quam nostrum dicta facere illo pariatur officiis vel adipisci, sed temporibus repudiandae libero ad illum in dolorum labore quaerat provident quae dolorem sint quas quia! Nesciunt, ipsam.
-      Qui modi maiores ad est, aspernatur, natus quam iure cupiditate quo tempora deserunt? Ab sed assumenda facere tempora, explicabo, corporis, eos asperiores rem numquam voluptatem suscipit natus aliquam eveniet. Excepturi!
-      Possimus suscipit eveniet nobis! Odio, omnis cum tempore labore eum doloremque ipsa quam distinctio repudiandae natus quasi reiciendis sequi inventore placeat voluptatem quia deserunt voluptate suscipit? Voluptate aliquam perferendis veritatis!
-      Debitis officia a molestias, deleniti officiis, rem saepe, vitae incidunt modi ratione dignissimos suscipit quo delectus? Eveniet fugit odit a magni earum est dolores magnam, animi consectetur, fugiat aliquam ea?
-      Dicta ex facilis harum, neque perspiciatis ullam. Sunt repellendus dolor, suscipit vitae odio perspiciatis sit pariatur architecto nihil alias voluptate amet? Ab, in quaerat. Quam voluptate corporis nostrum eius tempora.
-      Aut eaque ipsam recusandae impedit veritatis cum molestiae quaerat odit veniam sed dicta atque natus, totam vitae expedita minima iure? Alias pariatur, numquam laudantium nulla suscipit aperiam minima ullam fugit.
-      Error, exercitationem dolore, ut voluptas recusandae doloribus ipsa vel nulla hic dolor, asperiores officia consequatur enim possimus perspiciatis distinctio quasi dolorem quae alias pariatur repellat laborum quo nostrum. Accusamus, sint?
-      Omnis explicabo labore velit ab unde dolor error iure, nam animi recusandae aperiam? Nihil sed iusto dicta recusandae iure sint magni, eum eveniet, libero ex aperiam sunt, quod eaque incidunt?
-      Pariatur cumque dicta dolores provident! Atque porro laborum tenetur nulla dolore dignissimos consectetur architecto doloribus minus fugit qui ratione libero doloremque, suscipit exercitationem. Nobis porro assumenda debitis rerum minima harum.
-      Unde distinctio exercitationem neque, magni aspernatur excepturi. Quas quasi adipisci assumenda amet temporibus ipsa nulla illo. Fuga enim ad harum laboriosam laudantium iure voluptatem aliquam corrupti quae voluptates, reiciendis quo!
-      Praesentium, numquam? Corrupti iste numquam libero quae placeat quasi voluptatum est hic! Corporis animi reprehenderit, harum, quaerat iusto qui autem eos ratione, dolorem dolorum quos ab at quas et reiciendis.
-      Praesentium inventore similique adipisci doloremque voluptatem unde quidem amet, aliquam distinctio voluptate eius blanditiis iste totam ipsa, eum nihil in. Autem delectus eum expedita obcaecati vitae, aliquam quasi rerum sit.
-      Modi inventore at rerum hic dolore, doloribus accusantium qui quaerat? Reprehenderit minima consectetur natus molestias beatae! Quos commodi quasi molestiae consectetur veritatis culpa, odit unde placeat inventore fuga, ullam possimus?
-      Vitae, tempora eaque illo, deserunt soluta in dolorem temporibus voluptatum et, consectetur dignissimos libero non nemo dolore facilis pariatur adipisci ducimus animi obcaecati. Maiores voluptate aliquam, omnis facilis nihil asperiores!
-      Explicabo molestiae expedita vel hic et, modi doloribus quam! Ipsam at cumque iste quos amet omnis harum, ut quia sint assumenda, velit molestias voluptatibus facilis. Nisi pariatur consequatur dolores reiciendis.
-      Recusandae, non? Ipsum laudantium perspiciatis expedita officia fugit cumque modi error iste inventore quas, vitae eligendi neque minima tempora adipisci quam beatae sit obcaecati ab assumenda nostrum sint minus molestias?
-      Sed aperiam quo odio enim eos possimus, ullam dolores, porro ipsam dicta placeat quisquam debitis quos eaque, beatae nihil ea reprehenderit! Unde sit itaque aut, soluta minus modi commodi cumque?
-      Distinctio voluptas cupiditate voluptatibus maxime ut quam possimus harum sunt eum corrupti? Nobis dolores ducimus eligendi beatae dolore voluptatibus aliquam aut delectus id earum! Ipsa maxime corrupti accusamus ea blanditiis.
-      Hic sit cupiditate quasi molestias dicta voluptatum, ad dolor obcaecati magni dolorem exercitationem reprehenderit asperiores adipisci officiis beatae doloribus, aperiam eligendi. Hic, fugit. Amet asperiores qui laborum vero nemo omnis.
-      Ratione praesentium suscipit molestias, atque in mollitia modi minus vel sequi! Fugit esse corporis sit sint recusandae quo nobis assumenda sunt consequuntur iste rem vero, totam voluptatibus ex, quaerat quos.
-      Aspernatur quos nostrum autem dolor unde id consequatur, blanditiis quae aperiam esse fugit facilis, alias corporis cupiditate, eaque ullam. Facilis vero perspiciatis velit quis nobis non aliquid ullam illo nostrum.
-      Modi cupiditate ab corporis earum mollitia nulla ipsam expedita quaerat molestiae. Ea ipsum nam doloremque, hic quis facilis praesentium nesciunt dignissimos asperiores, consequuntur ipsam obcaecati saepe accusamus! Sit, eaque dolor.
-      Et voluptate sed consequuntur alias beatae tempora eum quae vel blanditiis, debitis magnam nam suscipit? Labore, placeat ab explicabo dolores consequuntur eaque cupiditate obcaecati hic quidem sed, at quis ad!
-      Totam similique delectus iste animi deserunt quis nulla, quam, minus architecto sapiente recusandae? Natus repudiandae labore, explicabo esse, unde ab animi reiciendis hic quis impedit accusantium consequatur in qui iste?
-      Commodi excepturi fugit asperiores corrupti rerum aperiam illo. Hic fugit voluptatem ducimus voluptatum obcaecati sapiente, ipsa quam aut, illum suscipit porro vero nobis, dolor nesciunt beatae voluptas tenetur animi vitae.
-      Velit quasi unde architecto! Voluptatem quo non nihil dolores, tenetur fugiat? Nam aut accusantium reiciendis esse similique impedit iusto suscipit dolorem ratione odit nihil beatae, delectus illum! Nam, cupiditate laboriosam?
-      Iure error quo nam architecto unde rem aliquam molestiae maxime corrupti velit commodi, voluptatum explicabo numquam doloribus praesentium illo dolorem, ad cupiditate, alias vitae perspiciatis. Blanditiis officia enim nemo incidunt.
-      Libero ipsa illum, provident earum iure mollitia, quidem tempora ipsum beatae nulla, omnis placeat. Quia, repellendus fuga debitis, facere ab deserunt a qui nesciunt beatae fugiat ipsa odit dolor esse?
-      Dicta impedit ipsam nihil quod itaque quidem voluptatem beatae inventore nisi, vel quasi laudantium! Quae, repellat atque dignissimos possimus, ullam consequatur perferendis dicta totam quisquam quam mollitia nemo voluptate tempora.
-      Placeat excepturi quis nisi soluta eius? Architecto illum voluptate voluptas in, accusantium ducimus alias hic pariatur sunt. Sunt fugiat quod quam ipsa aliquam. Nesciunt, quae omnis eaque nisi accusamus dignissimos!
-      Corrupti maiores quod porro. Magnam nostrum sunt, quia, natus, sed dolores ad autem fugit eum sint ratione esse quis! Quod earum suscipit nostrum, in reprehenderit esse fugit corrupti velit facilis.
-      Debitis dicta beatae eos ea quam aliquid dolor vitae quaerat repellat, libero accusantium, culpa quo ipsa, architecto illum asperiores enim cum deleniti incidunt eum soluta minus iusto quibusdam eveniet? Ducimus.
-      Laudantium, veritatis corporis! Id non, deserunt neque est quam nihil eaque! Suscipit, nobis laudantium tempore ipsam assumenda ut totam perferendis ea, laboriosam eum repellendus voluptatibus aperiam corporis soluta repellat necessitatibus.
-      Sit sequi neque doloremque magni iure ipsam illum et dolores, aliquid similique eum provident cumque cum minus. Facere numquam assumenda aut optio maxime cumque, ex ad totam laborum natus. Ipsa.
-      Porro, aspernatur perspiciatis explicabo illum facilis fuga sed est temporibus ullam. Maiores laborum architecto fuga, ullam perspiciatis omnis unde fugit quasi quaerat accusantium enim ducimus officiis neque autem provident. Temporibus.
-      Fuga distinctio impedit accusamus repellat iste, similique inventore voluptatum error laudantium saepe rem ea accusantium hic officiis necessitatibus possimus incidunt ex! Quo, animi vel? Voluptatem quod consequuntur dolorem a tempora!
-      Sed assumenda atque, nihil architecto voluptatum facere at dolorum fugiat veniam rem quod voluptatibus incidunt excepturi dignissimos aspernatur labore tempora unde est praesentium. Iusto fuga in aut ducimus alias nostrum?
-      Odio repudiandae officiis fuga a sapiente doloremque tempore ab deleniti iusto! Labore praesentium excepturi, laudantium officiis, eius inventore ipsam quos nam debitis quidem cumque illo sequi in dolore doloremque odit.
-      Tenetur perferendis fugit necessitatibus impedit modi id provident dolorem! Sunt autem aperiam expedita, eveniet ipsum provident molestias a dolores. Eligendi unde expedita quia omnis quasi! Magni nobis vitae enim accusantium.
-      Obcaecati eius consequatur magni vitae dolorum voluptas impedit est reprehenderit recusandae totam mollitia iste delectus odit cum vel, accusamus ullam molestias officia quam placeat id molestiae? Unde quisquam velit sunt.</p>
-      {/* Farmer-specific content */}
-    </div>
+    <>
+      <Head>
+        <title>NGO Dashboard | SaveNServe</title>
+        <meta name="description" content="Manage food distribution and community impact" />
+      </Head>
+
+      <main className="relative min-h-screen bg-gray-50 text-gray-900 overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/grid-pattern-light.svg')] opacity-5"></div>
+          <motion.div 
+            className="absolute top-20 left-10 w-64 h-64 bg-teal-100 rounded-full filter blur-3xl opacity-40"
+            animate={{
+              x: [0, 50, 0],
+              y: [0, 30, 0],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div 
+            className="absolute bottom-10 right-20 w-80 h-80 bg-emerald-100 rounded-full filter blur-3xl opacity-30"
+            animate={{
+              x: [0, -40, 0],
+              y: [0, -20, 0],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </div>
+
+        {/* Dashboard Layout */}
+        <div className="relative max-w-7xl mx-auto px-6 py-8">
+          {/* Header */}
+          <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center gap-4 mb-6 md:mb-0"
+            >
+              <div className="p-3 bg-teal-100 rounded-xl">
+                <HeartHandshake className="h-6 w-6 text-teal-600" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Community Food Network</h1>
+                <p className="text-gray-600">Welcome back, Helping Hands NGO!</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="flex items-center gap-4"
+            >
+              <button className="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+                <Settings className="h-5 w-5 text-gray-600" />
+              </button>
+              <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
+                <Users className="h-5 w-5 text-gray-600" />
+                <span className="font-medium">Team</span>
+              </button>
+            </motion.div>
+          </header>
+
+          {/* Main Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Sidebar */}
+            <motion.aside
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="lg:col-span-1 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
+            >
+              <div className="p-6">
+                <nav className="space-y-2">
+                  {[
+                    { name: "Dashboard", icon: <BarChart2 className="h-5 w-5" />, active: true },
+                    { name: "Food Requests", icon: <Package className="h-5 w-5" /> },
+                    { name: "Distribution", icon: <MapPin className="h-5 w-5" /> },
+                    { name: "Beneficiaries", icon: <Users className="h-5 w-5" /> },
+                    { name: "Reports", icon: <CheckCircle2 className="h-5 w-5" /> },
+                  ].map((item, index) => (
+                    <Link
+                      key={index}
+                      href="#"
+                      className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${item.active ? 'bg-teal-50 text-teal-700' : 'text-gray-600 hover:bg-gray-50'}`}
+                    >
+                      {item.icon}
+                      {item.name}
+                    </Link>
+                  ))}
+                </nav>
+
+                <div className="mt-8 pt-6 border-t border-gray-200">
+                  <button className="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-lg font-medium w-full transition-colors">
+                    <LogOut className="h-5 w-5" />
+                    <span>Log Out</span>
+                  </button>
+                </div>
+              </div>
+            </motion.aside>
+
+            {/* Main Dashboard */}
+            <div className="lg:col-span-3 space-y-8">
+              {/* Stats Cards */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              >
+                {[
+                  { value: "1,850 lbs", label: "Food Received", icon: <Package className="h-6 w-6 text-teal-600" />, trend: "up" },
+                  { value: "3,720", label: "Meals Distributed", icon: <HeartHandshake className="h-6 w-6 text-amber-500" />, trend: "up" },
+                  { value: "28", label: "Communities Served", icon: <MapPin className="h-6 w-6 text-emerald-500" />, trend: "steady" },
+                ].map((stat, index) => (
+                  <div key={index} className="bg-white rounded-xl p-6 border border-gray-200 hover:border-teal-300 transition-colors shadow-sm">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="p-2 bg-teal-50 rounded-lg">
+                        {stat.icon}
+                      </div>
+                      <span className={`px-2 py-1 text-xs font-medium rounded-full ${stat.trend === 'up' ? 'bg-green-100 text-green-800' : stat.trend === 'down' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'}`}>
+                        {stat.trend === 'up' ? '+18%' : stat.trend === 'down' ? '-7%' : '0%'}
+                      </span>
+                    </div>
+                    <p className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</p>
+                    <p className="text-gray-600">{stat.label}</p>
+                  </div>
+                ))}
+              </motion.div>
+
+              {/* Active Food Requests */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
+              >
+                <div className="p-6 border-b border-gray-200 flex justify-between items-center">
+                  <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-3">
+                    <AlertCircle className="h-5 w-5 text-teal-600" />
+                    Active Food Requests
+                  </h2>
+                  <Link href="#" className="text-teal-600 hover:text-teal-700 text-sm font-medium">
+                    View All
+                  </Link>
+                </div>
+                <div className="divide-y divide-gray-200">
+                  {[
+                    { 
+                      request: "Urgent: Fresh Produce Needed", 
+                      location: "Downtown Shelter", 
+                      quantity: "500 lbs", 
+                      time: "Within 24 hours",
+                      status: "High Priority"
+                    },
+                    { 
+                      request: "Daily Bread Supply", 
+                      location: "Community Kitchen", 
+                      quantity: "200 lbs", 
+                      time: "Ongoing",
+                      status: "Medium Priority"
+                    },
+                    { 
+                      request: "Weekend Meal Program", 
+                      location: "Youth Center", 
+                      quantity: "350 lbs", 
+                      time: "By Friday",
+                      status: "Medium Priority"
+                    },
+                  ].map((item, index) => (
+                    <div key={index} className="p-6 hover:bg-gray-50 transition-colors grid grid-cols-1 md:grid-cols-5 gap-4">
+                      <div className="md:col-span-2">
+                        <p className="font-medium text-gray-900">{item.request}</p>
+                        <p className="text-sm text-gray-500 flex items-center gap-1 mt-1">
+                          <MapPin className="h-4 w-4" />
+                          {item.location}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-gray-500 text-sm">Quantity Needed</p>
+                        <p className="font-medium">{item.quantity}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-500 text-sm">Timeframe</p>
+                        <p className="font-medium">{item.time}</p>
+                      </div>
+                      <div className="flex items-center justify-end">
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          item.status === 'High Priority' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'
+                        }`}>
+                          {item.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* Distribution Schedule and Impact */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Upcoming Distributions */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
+                >
+                  <div className="p-6 border-b border-gray-200">
+                    <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-3">
+                      <Calendar className="h-5 w-5 text-teal-600" />
+                      Upcoming Distributions
+                    </h2>
+                  </div>
+                  <div className="divide-y divide-gray-200">
+                    {[
+                      { 
+                        date: "Tomorrow, 10 AM", 
+                        location: "Homeless Shelter", 
+                        items: "Fresh Vegetables, Bread", 
+                        volunteers: 8
+                      },
+                      { 
+                        date: "Friday, 2 PM", 
+                        location: "Senior Center", 
+                        items: "Prepared Meals, Dairy", 
+                        volunteers: 5
+                      },
+                      { 
+                        date: "Sunday, 9 AM", 
+                        location: "Refugee Center", 
+                        items: "Mixed Groceries", 
+                        volunteers: 12
+                      },
+                    ].map((item, index) => (
+                      <div key={index} className="p-6 hover:bg-gray-50 transition-colors">
+                        <div className="flex items-start gap-4">
+                          <div className="p-2 bg-teal-50 rounded-lg mt-0.5">
+                            <Calendar className="h-5 w-5 text-teal-600" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-medium text-gray-900">{item.date}</p>
+                            <p className="text-gray-600 flex items-center gap-1">
+                              <MapPin className="h-4 w-4" />
+                              {item.location}
+                            </p>
+                            <div className="mt-2 flex justify-between items-center">
+                              <p className="text-sm text-gray-500">{item.items}</p>
+                              <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">
+                                {item.volunteers} volunteers
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Community Impact */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                  className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden"
+                >
+                  <div className="p-6 border-b border-gray-200">
+                    <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-3">
+                      <Users className="h-5 w-5 text-teal-600" />
+                      Community Impact
+                    </h2>
+                  </div>
+                  <div className="p-6">
+                    <div className="mb-6">
+                      <h3 className="font-medium text-gray-900 mb-3">Meals Distributed This Month</h3>
+                      <div className="h-40">
+                        {/* Chart placeholder - replace with actual chart component */}
+                        <div className="flex items-end h-full gap-1">
+                          {[30, 60, 90, 120, 90, 60, 30, 60, 90, 120, 150, 120].map((height, i) => (
+                            <motion.div
+                              key={i}
+                              initial={{ height: 0 }}
+                              animate={{ height: `${height}%` }}
+                              transition={{ duration: 0.8, delay: i * 0.05 }}
+                              className={`flex-1 rounded-t-sm ${
+                                height > 100 ? 'bg-teal-500' : height > 70 ? 'bg-teal-400' : 'bg-teal-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 bg-emerald-100 rounded-lg">
+                            <HeartHandshake className="h-5 w-5 text-emerald-600" />
+                          </div>
+                          <div>
+                            <p className="text-gray-500 text-sm">People Fed Today</p>
+                            <p className="font-medium">420</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="p-2 bg-amber-100 rounded-lg">
+                            <Clock className="h-5 w-5 text-amber-600" />
+                          </div>
+                          <div>
+                            <p className="text-gray-500 text-sm">Avg. Response Time</p>
+                            <p className="font-medium">6.2 hours</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="bg-teal-50 rounded-lg p-4 border border-teal-100">
+                        <p className="font-medium text-teal-800 mb-1">Impact Milestone</p>
+                        <p className="text-sm text-teal-700">
+                          You've provided 12,850 meals this month - reaching 92% of your monthly goal!
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
   );
 }

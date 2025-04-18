@@ -2,23 +2,23 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Menu, X, Truck, User, LogOut } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
+import { Menu, X, Truck, User, LogOut, MessageSquare, ScanEye } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
-    // Check for token in cookies (more secure than localStorage)
-    const checkAuth = () => {
+    const checkAuthStatus = () => {
       const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
       setIsLoggedIn(!!token);
     };
 
-    checkAuth();
+    checkAuthStatus();
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -26,15 +26,18 @@ export default function Navbar() {
     
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
-  const handleLogout = () => {
-    // Clear cookie and state
-    document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    setIsLoggedIn(false);
-    setIsOpen(false);
-    router.push("/");
-    router.refresh(); // Ensure the page updates
+  const handleLogout = async () => {
+    try {
+      document.cookie = 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      setIsLoggedIn(false);
+      setIsOpen(false);
+      router.push("/");
+      router.refresh();
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   const navItems = [
@@ -78,6 +81,30 @@ export default function Navbar() {
             </div>
 
             <div className="h-6 w-px bg-gray-700 mx-2"></div>
+
+            {/* AgriCheck Button */}
+            <Link href="/agricheck">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center gap-2 px-4 py-2 bg-amber-900/30 hover:bg-amber-900/50 text-amber-400 rounded-lg transition-colors font-medium"
+              >
+                <ScanEye className="h-4 w-4" />
+                <span>AgriCheck</span>
+              </motion.button>
+            </Link>
+
+            {/* Chat with Assistant Button */}
+            <Link href="/chat">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex items-center gap-2 px-4 py-2 bg-teal-900/30 hover:bg-teal-900/50 text-teal-400 rounded-lg transition-colors font-medium"
+              >
+                <MessageSquare className="h-4 w-4" />
+                <span>Chat Assistant</span>
+              </motion.button>
+            </Link>
 
             {isLoggedIn ? (
               <motion.div className="flex items-center gap-3">
@@ -153,6 +180,18 @@ export default function Navbar() {
                   {item.name}
                 </MobileNavLink>
               ))}
+
+              {/* Mobile AgriCheck Button */}
+              <MobileNavLink href="/agricheck" setIsOpen={setIsOpen} className="flex items-center gap-3 text-amber-400">
+                <ScanEye className="h-4 w-4" />
+                AgriCheck
+              </MobileNavLink>
+
+              {/* Mobile Chat Assistant Button */}
+              <MobileNavLink href="/chat" setIsOpen={setIsOpen} className="flex items-center gap-3 text-teal-400">
+                <MessageSquare className="h-4 w-4" />
+                Chat Assistant
+              </MobileNavLink>
 
               <div className="pt-2 border-t border-gray-800 mt-2">
                 {isLoggedIn ? (
