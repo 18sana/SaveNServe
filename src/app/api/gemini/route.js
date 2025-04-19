@@ -35,3 +35,5 @@ export async function POST(req) {
     return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
   }
 }
+
+// Cache for storing historical data and predictions

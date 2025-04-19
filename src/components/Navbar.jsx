@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { Menu, X, Truck, User, LogOut, MessageSquare, ScanEye } from "lucide-react";
+import { Menu, X, Truck, User, LogOut, MessageSquare, ScanEye, ChevronDown, Bot, Sparkles } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [aiDropdownOpen, setAiDropdownOpen] = useState(false);
+  const [mobileAiDropdownOpen, setMobileAiDropdownOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -45,6 +47,30 @@ export default function Navbar() {
     { name: "Surplus", href: "/surplus" },
     { name: "Connect", href: "/connect" },
     { name: "Donate", href: "/donate" },
+    { 
+      name: "AI Tools", 
+      href: "#",
+      dropdown: [
+        { 
+          name: "AgriCheck", 
+          href: "/agricheck", 
+          icon: <ScanEye className="h-4 w-4 text-amber-400" />,
+          color: "amber"
+        },
+        { 
+          name: "AI Prediction", 
+          href: "/prediction", 
+          icon: <Bot className="h-4 w-4 text-amber-400" />,
+          color: "amber"
+        },
+        { 
+          name: "Chat Assistant", 
+          href: "/chat", 
+          icon: <MessageSquare className="h-4 w-4 text-teal-400" />,
+          color: "teal"
+        }
+      ]
+    },
   ];
 
   return (
@@ -71,51 +97,55 @@ export default function Navbar() {
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="hidden lg:flex items-center space-x-4">
             <div className="flex space-x-1">
               {navItems.map((item) => (
-                <NavLink key={item.name} href={item.href}>
-                  {item.name}
-                </NavLink>
+                item.dropdown ? (
+                  <div 
+                    key={item.name} 
+                    className="relative"
+                    onMouseEnter={() => setAiDropdownOpen(true)}
+                    onMouseLeave={() => setAiDropdownOpen(false)}
+                  >
+                    <button className="flex items-center gap-1 px-4 py-2 text-gray-300 hover:text-teal-400 transition-colors font-medium">
+                      {item.name}
+                      <ChevronDown className={`h-4 w-4 transition-transform ${aiDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    
+                    <AnimatePresence>
+                      {aiDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.2 }}
+                          className="absolute left-0 mt-2 w-56 origin-top-right rounded-lg bg-gray-800 shadow-lg ring-1 ring-gray-700 focus:outline-none z-50"
+                        >
+                          <div className="py-1">
+                            {item.dropdown.map((dropdownItem) => (
+                              <Link
+                                key={dropdownItem.name}
+                                href={dropdownItem.href}
+                                className={`flex items-center gap-3 px-4 py-2.5 text-sm ${dropdownItem.color === 'amber' ? 'text-amber-400 hover:bg-amber-900/10' : 'text-teal-400 hover:bg-teal-900/10'} hover:bg-opacity-20 transition-colors`}
+                              >
+                                {dropdownItem.icon}
+                                {dropdownItem.name}
+                              </Link>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <NavLink key={item.name} href={item.href}>
+                    {item.name}
+                  </NavLink>
+                )
               ))}
             </div>
 
             <div className="h-6 w-px bg-gray-700 mx-2"></div>
-
-            {/* AgriCheck Button */}
-            <Link href="/agricheck">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-4 py-2 bg-amber-900/30 hover:bg-amber-900/50 text-amber-400 rounded-lg transition-colors font-medium"
-              >
-                <ScanEye className="h-4 w-4" />
-                <span>AgriCheck</span>
-              </motion.button>
-            </Link>
-
-            <Link href="/prediction">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-4 py-2 bg-amber-900/30 hover:bg-amber-900/50 text-amber-400 rounded-lg transition-colors font-medium"
-              >
-                <ScanEye className="h-4 w-4" />
-                <span>AI Prediction</span>
-              </motion.button>
-            </Link>
-
-            {/* Chat with Assistant Button */}
-            <Link href="/chat">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="flex items-center gap-2 px-4 py-2 bg-teal-900/30 hover:bg-teal-900/50 text-teal-400 rounded-lg transition-colors font-medium"
-              >
-                <MessageSquare className="h-4 w-4" />
-                <span>Chat Assistant</span>
-              </motion.button>
-            </Link>
 
             {isLoggedIn ? (
               <motion.div className="flex items-center gap-3">
@@ -187,27 +217,37 @@ export default function Navbar() {
           >
             <div className="px-4 py-3 space-y-1">
               {navItems.map((item) => (
-                <MobileNavLink key={item.name} href={item.href} setIsOpen={setIsOpen}>
-                  {item.name}
-                </MobileNavLink>
+                item.dropdown ? (
+                  <div key={item.name} className="space-y-1">
+                    <button 
+                      onClick={() => setMobileAiDropdownOpen(!mobileAiDropdownOpen)}
+                      className="w-full flex justify-between items-center px-4 py-3 text-left text-gray-300 hover:text-teal-400 rounded-lg hover:bg-gray-800 font-medium"
+                    >
+                      <span>{item.name}</span>
+                      <ChevronDown className={`h-4 w-4 transition-transform ${mobileAiDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+                    {mobileAiDropdownOpen && (
+                      <div className="ml-4 space-y-1">
+                        {item.dropdown.map((dropdownItem) => (
+                          <MobileNavLink 
+                            key={dropdownItem.name} 
+                            href={dropdownItem.href} 
+                            setIsOpen={setIsOpen} 
+                            className={`flex items-center gap-3 ${dropdownItem.color === 'amber' ? 'text-amber-400' : 'text-teal-400'}`}
+                          >
+                            {dropdownItem.icon}
+                            {dropdownItem.name}
+                          </MobileNavLink>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <MobileNavLink key={item.name} href={item.href} setIsOpen={setIsOpen}>
+                    {item.name}
+                  </MobileNavLink>
+                )
               ))}
-
-              <MobileNavLink href="/prediction" setIsOpen={setIsOpen} className="flex items-center gap-3 text-amber-400">
-                <ScanEye className="h-4 w-4" />
-                AI Prediction
-              </MobileNavLink>
-
-              {/* Mobile AgriCheck Button */}
-              <MobileNavLink href="/agricheck" setIsOpen={setIsOpen} className="flex items-center gap-3 text-amber-400">
-                <ScanEye className="h-4 w-4" />
-                AgriCheck
-              </MobileNavLink>
-
-              {/* Mobile Chat Assistant Button */}
-              <MobileNavLink href="/chat" setIsOpen={setIsOpen} className="flex items-center gap-3 text-teal-400">
-                <MessageSquare className="h-4 w-4" />
-                Chat Assistant
-              </MobileNavLink>
 
               <div className="pt-2 border-t border-gray-800 mt-2">
                 {isLoggedIn ? (

@@ -1,300 +1,3 @@
-// // "use client";
-
-// // import { useState } from "react";
-
-// // export default function Home() {
-// //   const [userInput, setUserInput] = useState("");
-// //   const [response, setResponse] = useState("");
-// //   const [loading, setLoading] = useState(false);
-
-// //   const handleSubmit = async () => {
-// //     if (!userInput.trim()) return;
-// //     setLoading(true);
-// //     setResponse("");
-
-// //     try {
-// //       const res = await fetch("/api/gemini", {
-// //         method: "POST",
-// //         headers: { "Content-Type": "application/json" },
-// //         body: JSON.stringify({ userInput }),
-// //       });
-
-// //       const data = await res.json();
-// //       setResponse(data.reply || "No response from Gemini AI");
-// //     } catch (error) {
-// //       setResponse("Error getting response.");
-// //     } finally {
-// //       setLoading(false);
-// //     }
-// //   };
-
-// //   return (
-// //     <div style={{ textAlign: "center", marginTop: "50px" }}>
-// //       <h1>Gemini AI Chat</h1>
-// //       <input
-// //         type="text"
-// //         value={userInput}
-// //         onChange={(e) => setUserInput(e.target.value)}
-// //         placeholder="Ask something..."
-// //         style={{ padding: "10px", width: "60%", marginBottom: "10px" }}
-// //       />
-// //       <br />
-// //       <button
-// //         onClick={handleSubmit}
-// //         style={{
-// //           padding: "10px 20px",
-// //           background: "#007bff",
-// //           color: "#fff",
-// //           border: "none",
-// //           cursor: "pointer",
-// //         }}
-// //         disabled={loading}
-// //       >
-// //         {loading ? "Loading..." : "Ask Gemini"}
-// //       </button>
-// //       <div style={{ marginTop: "20px", fontSize: "18px", color: "black" }}>
-// //         {response && <p><strong>Response:</strong> {response}</p>}
-// //       </div>
-// //     </div>
-// //   );
-// // }
-// "use client";
-
-// import { useState, useRef, useEffect } from "react";
-// import { Bot, User, Leaf, ShoppingBasket, Send, Loader2 } from "lucide-react";
-
-// export default function ChatPage() {
-//   const [activeTab, setActiveTab] = useState("farmer");
-//   const [userInput, setUserInput] = useState("");
-//   const [messages, setMessages] = useState([]);
-//   const [loading, setLoading] = useState(false);
-//   const messagesEndRef = useRef(null);
-
-//   // Sample welcome messages for each category
-//   const welcomeMessages = {
-//     farmer: "👋 Hello farmer! I'm here to help with crop management, market prices, weather forecasts, and sustainable farming practices. How can I assist you today?",
-//     retailer: "🛒 Welcome food retailer! Ask me about food donation logistics, inventory management, tax benefits, or connecting with local food banks."
-//   };
-
-//   // Scroll to bottom of chat
-//   useEffect(() => {
-//     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-//   }, [messages]);
-
-//   // Initialize with welcome message
-//   useEffect(() => {
-//     setMessages([{ text: welcomeMessages[activeTab], sender: "bot" }]);
-//   }, [activeTab]);
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     if (!userInput.trim()) return;
-    
-//     const newMessage = { text: userInput, sender: "user" };
-//     setMessages(prev => [...prev, newMessage]);
-//     setUserInput("");
-//     setLoading(true);
-
-//     try {
-//       const res = await fetch("/api/gemini", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ 
-//           userInput,
-//           context: `You are an agricultural assistant helping ${activeTab === "farmer" ? "farmers" : "food retailers"}.` 
-//         }),
-//       });
-
-//       const data = await res.json();
-//       setMessages(prev => [...prev, { text: data.reply || "I couldn't process that request.", sender: "bot" }]);
-//     } catch (error) {
-//       setMessages(prev => [...prev, { text: "Error getting response. Please try again.", sender: "bot" }]);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   const handleKeyDown = (e) => {
-//     if (e.key === "Enter" && !e.shiftKey) {
-//       e.preventDefault();
-//       handleSubmit(e);
-//     }
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-b from-teal-50 to-green-50 p-4 md:p-8">
-//       <div className="max-w-6xl mx-auto">
-//         {/* Header */}
-//         <div className="text-center mb-8">
-//           <h1 className="text-3xl md:text-4xl font-bold text-green-800 mb-2">
-//             AgriConnect AI Assistant
-//           </h1>
-//           <p className="text-lg text-green-600">
-//             Smart solutions for farmers and food retailers
-//           </p>
-//         </div>
-
-//         {/* Tab Navigation */}
-//         <div className="flex justify-center mb-8">
-//           <div className="inline-flex rounded-lg bg-white shadow-md overflow-hidden">
-//             <button
-//               onClick={() => setActiveTab("farmer")}
-//               className={`px-6 py-3 flex items-center gap-2 font-medium transition-all ${activeTab === "farmer" ? "bg-green-600 text-white" : "bg-white text-green-800 hover:bg-green-50"}`}
-//             >
-//               <Leaf className="h-5 w-5" />
-//               Farmer Assistance
-//             </button>
-//             <button
-//               onClick={() => setActiveTab("retailer")}
-//               className={`px-6 py-3 flex items-center gap-2 font-medium transition-all ${activeTab === "retailer" ? "bg-green-600 text-white" : "bg-white text-green-800 hover:bg-green-50"}`}
-//             >
-//               <ShoppingBasket className="h-5 w-5" />
-//               Retailer Support
-//             </button>
-//           </div>
-//         </div>
-
-//         {/* Chat Container */}
-//         <div className="bg-white rounded-xl shadow-xl overflow-hidden">
-//           {/* Chat Header */}
-//           <div className={`p-4 ${activeTab === "farmer" ? "bg-green-600" : "bg-green-700"} text-white`}>
-//             <div className="flex items-center gap-3">
-//               <div className={`p-2 rounded-full ${activeTab === "farmer" ? "bg-green-700" : "bg-green-800"}`}>
-//                 {activeTab === "farmer" ? (
-//                   <Leaf className="h-6 w-6" />
-//                 ) : (
-//                   <ShoppingBasket className="h-6 w-6" />
-//                 )}
-//               </div>
-//               <div>
-//                 <h2 className="font-bold text-lg">
-//                   {activeTab === "farmer" ? "Farmer Support" : "Food Retailer Support"}
-//                 </h2>
-//                 <p className="text-sm opacity-90">
-//                   {activeTab === "farmer" 
-//                     ? "Ask about crops, weather, or market prices" 
-//                     : "Ask about donations, logistics, or partnerships"}
-//                 </p>
-//               </div>
-//             </div>
-//           </div>
-
-//           {/* Messages Area */}
-//           <div className="h-96 overflow-y-auto p-4 bg-gray-50">
-//             {messages.map((message, index) => (
-//               <div
-//                 key={index}
-//                 className={`flex mb-4 ${message.sender === "user" ? "justify-end" : "justify-start"}`}
-//               >
-//                 <div
-//                   className={`max-w-3/4 rounded-lg p-4 ${message.sender === "user" 
-//                     ? "bg-green-100 text-green-900 rounded-br-none" 
-//                     : "bg-white text-gray-800 shadow-sm rounded-bl-none border border-gray-200"}`}
-//                 >
-//                   <div className="flex items-start gap-2">
-//                     {message.sender === "bot" ? (
-//                       <div className="p-1 bg-green-100 rounded-full mt-1">
-//                         <Bot className="h-4 w-4 text-green-600" />
-//                       </div>
-//                     ) : (
-//                       <div className="p-1 bg-green-600 rounded-full mt-1">
-//                         <User className="h-4 w-4 text-white" />
-//                       </div>
-//                     )}
-//                     <div className="whitespace-pre-wrap">{message.text}</div>
-//                   </div>
-//                 </div>
-//               </div>
-//             ))}
-//             {loading && (
-//               <div className="flex justify-start mb-4">
-//                 <div className="bg-white rounded-lg rounded-bl-none p-4 shadow-sm border border-gray-200">
-//                   <div className="flex items-center gap-2">
-//                     <div className="p-1 bg-green-100 rounded-full">
-//                       <Bot className="h-4 w-4 text-green-600" />
-//                     </div>
-//                     <Loader2 className="h-4 w-4 animate-spin text-green-600" />
-//                     <span>Thinking...</span>
-//                   </div>
-//                 </div>
-//               </div>
-//             )}
-//             <div ref={messagesEndRef} />
-//           </div>
-
-//           {/* Input Area */}
-//           <form onSubmit={handleSubmit} className="p-4 border-t border-gray-200 bg-white">
-//             <div className="flex items-center gap-2">
-//               <input
-//                 type="text"
-//                 value={userInput}
-//                 onChange={(e) => setUserInput(e.target.value)}
-//                 onKeyDown={handleKeyDown}
-//                 placeholder={
-//                   activeTab === "farmer" 
-//                     ? "Ask about crops, weather, or market prices..." 
-//                     : "Ask about food donations, logistics, or partnerships..."
-//                 }
-//                 className="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
-//                 disabled={loading}
-//               />
-//               <button
-//                 type="submit"
-//                 disabled={loading || !userInput.trim()}
-//                 className={`p-3 rounded-lg ${loading || !userInput.trim() 
-//                   ? "bg-gray-300 text-gray-500 cursor-not-allowed" 
-//                   : "bg-green-600 text-white hover:bg-green-700"} transition-colors`}
-//               >
-//                 {loading ? (
-//                   <Loader2 className="h-5 w-5 animate-spin" />
-//                 ) : (
-//                   <Send className="h-5 w-5" />
-//                 )}
-//               </button>
-//             </div>
-//             <p className="text-xs text-gray-500 mt-2 text-center">
-//               {activeTab === "farmer"
-//                 ? "Tip: Try asking 'What's the best crop for my region this season?'"
-//                 : "Tip: Try asking 'How can I get tax benefits for food donations?'"}
-//             </p>
-//           </form>
-//         </div>
-
-//         {/* Feature Highlights */}
-//         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-//           <div className="bg-white p-6 rounded-xl shadow-md border border-green-100">
-//             <div className="bg-green-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-//               <Leaf className="text-green-600" />
-//             </div>
-//             <h3 className="font-bold text-lg text-green-800 mb-2">Farm Optimization</h3>
-//             <p className="text-gray-600">
-//               Get personalized advice on crop rotation, soil health, and sustainable farming practices.
-//             </p>
-//           </div>
-//           <div className="bg-white p-6 rounded-xl shadow-md border border-green-100">
-//             <div className="bg-green-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-//               <ShoppingBasket className="text-green-600" />
-//             </div>
-//             <h3 className="font-bold text-lg text-green-800 mb-2">Donation Logistics</h3>
-//             <p className="text-gray-600">
-//               Learn about food preservation, transportation, and connecting with local charities.
-//             </p>
-//           </div>
-//           <div className="bg-white p-6 rounded-xl shadow-md border border-green-100">
-//             <div className="bg-green-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-//               <Bot className="text-green-600" />
-//             </div>
-//             <h3 className="font-bold text-lg text-green-800 mb-2">Market Insights</h3>
-//             <p className="text-gray-600">
-//               Real-time market prices, demand forecasts, and profitable selling strategies.
-//             </p>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -402,26 +105,26 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-teal-50 to-green-50 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto mt-20">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4 md:p-8">
+      <div className="max-w-6xl mx-auto mt-12">
         {/* Header with Logo */}
         <header className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <h1 className="text-3xl font-bold text-green-800">
-              AgriConnect<span className="text-teal-600">AI</span>
+            <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
+              AgriConnect<span className="text-teal-300">AI</span>
             </h1>
           </div>
-          <p className="text-lg text-green-600">
+          <p className="text-lg text-emerald-200">
             Smart agricultural solutions powered by Gemini
           </p>
         </header>
 
         {/* Tab Navigation */}
         <div className="flex justify-center mb-8">
-          <div className="inline-flex rounded-lg bg-white shadow-md overflow-hidden border border-green-100">
+          <div className="inline-flex rounded-xl bg-gray-800 shadow-lg overflow-hidden border border-gray-700">
             <button
               onClick={() => setActiveTab("farmer")}
-              className={`px-6 py-3 flex items-center gap-2 font-medium transition-all ${activeTab === "farmer" ? "bg-green-600 text-white" : "bg-white text-green-800 hover:bg-green-50"}`}
+              className={`px-6 py-3 flex items-center gap-2 font-medium transition-all ${activeTab === "farmer" ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg" : "bg-gray-800 text-gray-300 hover:bg-gray-700"}`}
             >
               <Leaf className="h-5 w-5" />
               Farmer Mode
@@ -431,7 +134,7 @@ export default function ChatPage() {
                 setActiveTab("retailer");
                 setLanguage("english"); // Reset to English when switching to retailer
               }}
-              className={`px-6 py-3 flex items-center gap-2 font-medium transition-all ${activeTab === "retailer" ? "bg-green-600 text-white" : "bg-white text-green-800 hover:bg-green-50"}`}
+              className={`px-6 py-3 flex items-center gap-2 font-medium transition-all ${activeTab === "retailer" ? "bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg" : "bg-gray-800 text-gray-300 hover:bg-gray-700"}`}
             >
               <ShoppingBasket className="h-5 w-5" />
               Retailer Mode
@@ -440,15 +143,15 @@ export default function ChatPage() {
         </div>
 
         {/* Main Chat Container */}
-        <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-green-100">
+        <div className="bg-gray-800 rounded-xl shadow-2xl overflow-hidden border border-gray-700">
           {/* Chat Header */}
-          <div className={`p-4 ${activeTab === "farmer" ? "bg-stone-500" : "bg-teal-600"} text-white flex justify-between items-center`}>
+          <div className={`p-4 ${activeTab === "farmer" ? "bg-gradient-to-r from-emerald-700 to-teal-700" : "bg-gradient-to-r from-teal-700 to-emerald-700"} text-white flex justify-between items-center`}>
             <div className="flex items-center gap-3">
-              <div className={`p-2 rounded-full ${activeTab === "farmer" ? "bg-green-700" : "bg-teal-700"}`}>
+              <div className={`p-2 rounded-full ${activeTab === "farmer" ? "bg-emerald-800" : "bg-teal-800"}`}>
                 {activeTab === "farmer" ? (
-                  <Leaf className="h-6 w-6" />
+                  <Leaf className="h-6 w-6 text-emerald-200" />
                 ) : (
-                  <ShoppingBasket className="h-6 w-6" />
+                  <ShoppingBasket className="h-6 w-6 text-teal-200" />
                 )}
               </div>
               <div>
@@ -469,7 +172,7 @@ export default function ChatPage() {
             {activeTab === "farmer" && (
               <button
                 onClick={toggleLanguage}
-                className="flex items-center gap-2 bg-white/20 hover:bg-white/30 px-3 py-1.5 rounded-full text-sm transition-colors"
+                className="flex items-center gap-2 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full text-sm transition-colors backdrop-blur-sm"
               >
                 <Languages className="h-4 w-4" />
                 {language === "english" ? "हिंदी" : "English"}
@@ -478,21 +181,21 @@ export default function ChatPage() {
           </div>
 
           {/* Messages Area */}
-          <div className="h-[400px] overflow-y-auto p-4 bg-gray-50">
+          <div className="h-[400px] overflow-y-auto p-4 bg-gray-900">
             {messages.map((message, index) => (
               <div
                 key={index}
                 className={`flex mb-4 ${message.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg p-4 ${message.sender === "user" 
-                    ? "bg-teal-600 text-white rounded-br-none" 
-                    : "bg-white text-gray-800 shadow-sm rounded-bl-none border border-gray-200"}`}
+                  className={`max-w-[80%] rounded-xl p-4 ${message.sender === "user" 
+                    ? "bg-gradient-to-r from-teal-600 to-emerald-600 text-white rounded-br-none shadow-lg" 
+                    : "bg-gray-800 text-gray-100 shadow-md rounded-bl-none border border-gray-700"}`}
                 >
                   <div className="flex items-start gap-3">
                     {message.sender === "bot" ? (
-                      <div className="p-1.5 bg-green-100 rounded-full mt-0.5">
-                        <Bot className="h-4 w-4 text-green-600" />
+                      <div className="p-1.5 bg-emerald-900/50 rounded-full mt-0.5">
+                        <Bot className="h-4 w-4 text-emerald-300" />
                       </div>
                     ) : (
                       <div className="p-1.5 bg-teal-700 rounded-full mt-0.5">
@@ -506,14 +209,14 @@ export default function ChatPage() {
             ))}
             {loading && (
               <div className="flex justify-start mb-4">
-                <div className="bg-white rounded-lg rounded-bl-none p-4 shadow-sm border border-gray-200 max-w-[80%]">
+                <div className="bg-gray-800 rounded-xl rounded-bl-none p-4 shadow-md border border-gray-700 max-w-[80%]">
                   <div className="flex items-center gap-3">
-                    <div className="p-1.5 bg-green-100 rounded-full">
-                      <Bot className="h-4 w-4 text-green-600" />
+                    <div className="p-1.5 bg-emerald-900/50 rounded-full">
+                      <Bot className="h-4 w-4 text-emerald-300" />
                     </div>
                     <div className="flex items-center gap-2">
-                      <Loader2 className="h-4 w-4 animate-spin text-green-600" />
-                      <span className="text-gray-600">
+                      <Loader2 className="h-4 w-4 animate-spin text-emerald-400" />
+                      <span className="text-gray-400">
                         {language === "hindi" ? "प्रतिक्रिया तैयार की जा रही है..." : "Generating response..."}
                       </span>
                     </div>
@@ -525,13 +228,13 @@ export default function ChatPage() {
           </div>
 
           {/* Quick Questions */}
-          <div className="px-4 pt-2 pb-3 bg-gray-100 border-t border-gray-200">
+          <div className="px-4 pt-2 pb-3 bg-gray-800 border-t border-gray-700">
             <div className="flex flex-wrap gap-2">
               {(activeTab === "farmer" ? quickQuestions.farmer[language] : quickQuestions.retailer.english).map((question, index) => (
                 <button
                   key={index}
                   onClick={() => handleQuickQuestion(question)}
-                  className="text-xs px-3 py-1.5 bg-white text-green-800 rounded-full border border-green-200 hover:bg-green-50 transition-colors"
+                  className="text-xs px-3 py-1.5 bg-gray-700 text-emerald-200 rounded-full border border-gray-600 hover:bg-gray-600 hover:text-white transition-colors"
                 >
                   {question}
                 </button>
@@ -540,7 +243,7 @@ export default function ChatPage() {
           </div>
 
           {/* Input Area */}
-          <form onSubmit={handleSubmit} className="p-4 border-t border-gray-200 bg-white">
+          <form onSubmit={handleSubmit} className="p-4 border-t border-gray-700 bg-gray-800">
             <div className="flex items-center gap-2">
               <input
                 type="text"
@@ -554,15 +257,15 @@ export default function ChatPage() {
                       : "Ask about crops, weather, or market prices..."
                     : "Ask about food donations, logistics, or partnerships..."
                 }
-                className="flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="flex-1 p-3 rounded-lg bg-gray-700 border border-gray-600 text-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent placeholder-gray-400"
                 disabled={loading}
               />
               <button
                 type="submit"
                 disabled={loading || !userInput.trim()}
                 className={`p-3 rounded-lg flex items-center justify-center ${loading || !userInput.trim() 
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed" 
-                  : "bg-green-600 text-white hover:bg-green-700"} transition-colors`}
+                  ? "bg-gray-700 text-gray-500 cursor-not-allowed" 
+                  : "bg-gradient-to-r from-emerald-600 to-teal-600 text-white hover:from-emerald-500 hover:to-teal-500 shadow-lg"} transition-all`}
               >
                 {loading ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -583,30 +286,30 @@ export default function ChatPage() {
 
         {/* Feature Highlights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-          <div className="bg-white p-6 rounded-xl shadow-md border border-green-100 hover:shadow-lg transition-shadow">
-            <div className="bg-green-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <Leaf className="text-green-600" />
+          <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 hover:shadow-xl transition-all hover:border-emerald-500/30">
+            <div className="bg-gradient-to-br from-emerald-900/50 to-teal-900/50 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+              <Leaf className="text-emerald-400" />
             </div>
-            <h3 className="font-bold text-lg text-green-800 mb-2">Farm Optimization</h3>
-            <p className="text-gray-600">
+            <h3 className="font-bold text-lg text-emerald-300 mb-2">Farm Optimization</h3>
+            <p className="text-gray-400">
               Get personalized advice on crop rotation, soil health, irrigation, and sustainable farming practices.
             </p>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow-md border border-green-100 hover:shadow-lg transition-shadow">
-            <div className="bg-green-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <ShoppingBasket className="text-green-600" />
+          <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 hover:shadow-xl transition-all hover:border-emerald-500/30">
+            <div className="bg-gradient-to-br from-emerald-900/50 to-teal-900/50 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+              <ShoppingBasket className="text-emerald-400" />
             </div>
-            <h3 className="font-bold text-lg text-green-800 mb-2">Donation Network</h3>
-            <p className="text-gray-600">
+            <h3 className="font-bold text-lg text-emerald-300 mb-2">Donation Network</h3>
+            <p className="text-gray-400">
               Connect with local food banks, understand regulations, and optimize your donation process.
             </p>
           </div>
-          <div className="bg-white p-6 rounded-xl shadow-md border border-green-100 hover:shadow-lg transition-shadow">
-            <div className="bg-green-100 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
-              <Bot className="text-green-600" />
+          <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 hover:shadow-xl transition-all hover:border-emerald-500/30">
+            <div className="bg-gradient-to-br from-emerald-900/50 to-teal-900/50 p-3 rounded-full w-12 h-12 flex items-center justify-center mb-4">
+              <Bot className="text-emerald-400" />
             </div>
-            <h3 className="font-bold text-lg text-green-800 mb-2">Real-time Insights</h3>
-            <p className="text-gray-600">
+            <h3 className="font-bold text-lg text-emerald-300 mb-2">Real-time Insights</h3>
+            <p className="text-gray-400">
               Access market prices, weather forecasts, and demand trends specific to your location.
             </p>
           </div>
