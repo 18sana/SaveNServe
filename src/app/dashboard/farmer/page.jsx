@@ -915,14 +915,7 @@ const renderRequests = () => (
   <div className="space-y-6">
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
       <h2 className="text-2xl font-bold text-gray-900">Donation Requests</h2>
-      <div className="flex gap-3">
-        <select className="px-4 py-2 border border-gray-300 rounded-lg">
-          <option>All Requests</option>
-          <option>Pending</option>
-          <option>Approved</option>
-          <option>Rejected</option>
-        </select>
-      </div>
+      
     </div>
 
     <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
@@ -1098,7 +1091,7 @@ const renderAIInsights = () => {
       {/* Header with improved styling */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-gradient-to-r from-teal-50 to-blue-50 p-6 rounded-xl">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">AI Insights Dashboard</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Insights Dashboard</h2>
           <p className="text-gray-600 mt-1">
             Data-driven recommendations to optimize your food surplus management
           </p>
@@ -1113,12 +1106,7 @@ const renderAIInsights = () => {
             <option value="6months">Last 6 Months</option>
             <option value="12months">Last 12 Months</option>
           </select>
-          <button className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 flex items-center justify-center">
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-            </svg>
-            Export Report
-          </button>
+          
         </div>
       </div>
 
@@ -1776,61 +1764,8 @@ const renderAIInsights = () => {
           <div>
            <div className="space-y-6">
   <div className="flex justify-between items-center">
-    <h2 className="text-2xl font-bold text-gray-900">Farm Dashboard</h2>
+    <h2 className="text-2xl font-bold text-gray-900">Farmer Dashboard</h2>
     <div className="text-sm text-gray-500">Last updated: Today, 10:45 AM</div>
-  </div>
-  
-  {/* Weather & Quick Stats */}
-  <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-    <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 rounded-xl shadow-lg text-white lg:col-span-2">
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-lg font-medium">Current Weather</h3>
-          <div className="flex items-center mt-2">
-            <span className="text-4xl font-bold">24°C</span>
-            <span className="ml-2">Sunny</span>
-          </div>
-          <div className="mt-1 text-sm">Humidity: 65% | Wind: 12 km/h NE</div>
-        </div>
-        <div className="text-5xl">☀️</div>
-      </div>
-      <div className="mt-4 pt-4 border-t border-blue-400 flex justify-between text-sm">
-        <div className="text-center">
-          <div>Tomorrow</div>
-          <div className="text-xl">26°C</div>
-        </div>
-        <div className="text-center">
-          <div>Wed</div>
-          <div className="text-xl">22°C</div>
-        </div>
-        <div className="text-center">
-          <div>Thu</div>
-          <div className="text-xl">20°C</div>
-        </div>
-      </div>
-    </div>
-    
-    <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-green-500">
-      <h3 className="text-lg font-medium text-gray-700">Soil Moisture</h3>
-      <div className="flex items-end mt-4">
-        <span className="text-3xl font-bold">68%</span>
-        <span className="ml-2 text-sm text-green-600">Optimal</span>
-      </div>
-      <div className="mt-2 h-2 w-full bg-gray-200 rounded-full">
-        <div className="h-2 bg-green-500 rounded-full" style={{width: '68%'}}></div>
-      </div>
-    </div>
-    
-    <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-amber-500">
-      <h3 className="text-lg font-medium text-gray-700">Crop Health</h3>
-      <div className="flex items-end mt-4">
-        <span className="text-3xl font-bold">84%</span>
-        <span className="ml-2 text-sm text-amber-600">Good</span>
-      </div>
-      <div className="mt-2 h-2 w-full bg-gray-200 rounded-full">
-        <div className="h-2 bg-amber-400 rounded-full" style={{width: '84%'}}></div>
-      </div>
-    </div>
   </div>
   
   {/* Main Content */}
@@ -1976,9 +1911,6 @@ const renderAIInsights = () => {
 
         {/* Sidebar */}
         <div className={`fixed md:relative z-40 md:z-0 w-64 h-full bg-white border-r border-gray-200 transform ${mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 transition-transform duration-200 ease-in-out`}>
-          <div className="flex items-center h-16 px-6 border-b border-gray-200">
-            <h1 className="text-xl font-semibold text-gray-900">Farmer Portal</h1>
-          </div>
           <div className="flex flex-col flex-grow p-4 overflow-y-auto">
             <nav className="flex-1 space-y-2">
               {[
@@ -1986,7 +1918,7 @@ const renderAIInsights = () => {
                 { id: "add", icon: <PlusCircle className="h-5 w-5" />, label: "Add Surplus" },
                 { id: "listings", icon: <List className="h-5 w-5" />, label: "My Listings" },
                 { id: "requests", icon: <Inbox className="h-5 w-5" />, label: "Donation Requests" },
-                { id: "ai", icon: <BarChart2 className="h-5 w-5" />, label: "AI Insights" },
+                { id: "ai", icon: <BarChart2 className="h-5 w-5" />, label: "Insights" },
                 { id: "messages", icon: <MessageSquare className="h-5 w-5" />, label: "Messages" },
                 { id: "reports", icon: <FileText className="h-5 w-5" />, label: "Reports" },
                 { id: "help", icon: <HelpCircle className="h-5 w-5" />, label: "Help" }
@@ -2011,13 +1943,6 @@ const renderAIInsights = () => {
           </div>
           <div className="p-4 border-t border-gray-200">
             <div className="flex items-center">
-              <div className="h-10 w-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 font-medium">
-                FP
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-900">Farm Producer</p>
-                <p className="text-xs text-gray-500">Premium Member</p>
-              </div>
             </div>
           </div>
         </div>

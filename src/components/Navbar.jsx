@@ -3,22 +3,13 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-<<<<<<< HEAD
-import { Menu, X, Truck, User, LogOut, MessageSquare, ScanEye, ChevronDown, Bot, Sparkles } from "lucide-react";
-=======
 import { Menu, X, Truck, User, LogOut, MessageSquare, ScanEye, Home, HeartHandshake, Gift, ChevronDown } from "lucide-react";
->>>>>>> d1a5ca791608183bfcf696dcff4ee1fbcab37e82
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-<<<<<<< HEAD
-  const [aiDropdownOpen, setAiDropdownOpen] = useState(false);
-  const [mobileAiDropdownOpen, setMobileAiDropdownOpen] = useState(false);
-=======
   const [isHovering, setIsHovering] = useState(null);
->>>>>>> d1a5ca791608183bfcf696dcff4ee1fbcab37e82
   const router = useRouter();
   const pathname = usePathname();
 
@@ -51,40 +42,10 @@ export default function Navbar() {
   };
 
   const navItems = [
-<<<<<<< HEAD
-    { name: "Home", href: "/" },
-    { name: "Surplus", href: "/surplus" },
-    { name: "Connect", href: "/connect" },
-    { name: "Donate", href: "/donate" },
-    { 
-      name: "AI Tools", 
-      href: "#",
-      dropdown: [
-        { 
-          name: "AgriCheck", 
-          href: "/agricheck", 
-          icon: <ScanEye className="h-4 w-4 text-amber-400" />,
-          color: "amber"
-        },
-        { 
-          name: "AI Prediction", 
-          href: "/prediction", 
-          icon: <Bot className="h-4 w-4 text-amber-400" />,
-          color: "amber"
-        },
-        { 
-          name: "Chat Assistant", 
-          href: "/chat", 
-          icon: <MessageSquare className="h-4 w-4 text-teal-400" />,
-          color: "teal"
-        }
-      ]
-    },
-=======
     { name: "Home", href: "/", icon: <Home size={18} /> },
     { name: "Surplus", href: "/surplus", icon: <Gift size={18} /> },
     { name: "Connect", href: "/connect", icon: <HeartHandshake size={18} /> },
-    { name: "Donate", href: "/donate", icon: <HeartHandshake size={18} /> },
+   
   ];
 
   const featureItems = [
@@ -109,7 +70,6 @@ export default function Navbar() {
       color: "text-teal-400 hover:bg-teal-900/20",
       desc: "Get instant help"
     }
->>>>>>> d1a5ca791608183bfcf696dcff4ee1fbcab37e82
   ];
 
   return (
@@ -136,67 +96,17 @@ export default function Navbar() {
           </motion.div>
 
           {/* Desktop Navigation */}
-<<<<<<< HEAD
-          <div className="hidden lg:flex items-center space-x-4">
-            <div className="flex space-x-1">
-              {navItems.map((item) => (
-                item.dropdown ? (
-                  <div 
-                    key={item.name} 
-                    className="relative"
-                    onMouseEnter={() => setAiDropdownOpen(true)}
-                    onMouseLeave={() => setAiDropdownOpen(false)}
-                  >
-                    <button className="flex items-center gap-1 px-4 py-2 text-gray-300 hover:text-teal-400 transition-colors font-medium">
-                      {item.name}
-                      <ChevronDown className={`h-4 w-4 transition-transform ${aiDropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                    
-                    <AnimatePresence>
-                      {aiDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{ duration: 0.2 }}
-                          className="absolute left-0 mt-2 w-56 origin-top-right rounded-lg bg-gray-800 shadow-lg ring-1 ring-gray-700 focus:outline-none z-50"
-                        >
-                          <div className="py-1">
-                            {item.dropdown.map((dropdownItem) => (
-                              <Link
-                                key={dropdownItem.name}
-                                href={dropdownItem.href}
-                                className={`flex items-center gap-3 px-4 py-2.5 text-sm ${dropdownItem.color === 'amber' ? 'text-amber-400 hover:bg-amber-900/10' : 'text-teal-400 hover:bg-teal-900/10'} hover:bg-opacity-20 transition-colors`}
-                              >
-                                {dropdownItem.icon}
-                                {dropdownItem.name}
-                              </Link>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                ) : (
-                  <NavLink key={item.name} href={item.href}>
-                    {item.name}
-                  </NavLink>
-                )
-=======
           <div className="hidden lg:flex items-center gap-4">
             <div className="flex">
               {navItems.map((item) => (
                 <NavLink key={item.name} href={item.href} icon={item.icon}>
                   {item.name}
                 </NavLink>
->>>>>>> d1a5ca791608183bfcf696dcff4ee1fbcab37e82
               ))}
             </div>
 
             <div className="h-6 w-px bg-gray-700 mx-1"></div>
 
-<<<<<<< HEAD
-=======
             {/* Features Dropdown */}
             <motion.div 
               className="relative"
@@ -247,7 +157,6 @@ export default function Navbar() {
               </AnimatePresence>
             </motion.div>
 
->>>>>>> d1a5ca791608183bfcf696dcff4ee1fbcab37e82
             {isLoggedIn ? (
               <motion.div className="flex items-center gap-2">
                 <Link
@@ -318,40 +227,6 @@ export default function Navbar() {
           >
             <div className="px-4 py-3 space-y-1">
               {navItems.map((item) => (
-<<<<<<< HEAD
-                item.dropdown ? (
-                  <div key={item.name} className="space-y-1">
-                    <button 
-                      onClick={() => setMobileAiDropdownOpen(!mobileAiDropdownOpen)}
-                      className="w-full flex justify-between items-center px-4 py-3 text-left text-gray-300 hover:text-teal-400 rounded-lg hover:bg-gray-800 font-medium"
-                    >
-                      <span>{item.name}</span>
-                      <ChevronDown className={`h-4 w-4 transition-transform ${mobileAiDropdownOpen ? 'rotate-180' : ''}`} />
-                    </button>
-                    {mobileAiDropdownOpen && (
-                      <div className="ml-4 space-y-1">
-                        {item.dropdown.map((dropdownItem) => (
-                          <MobileNavLink 
-                            key={dropdownItem.name} 
-                            href={dropdownItem.href} 
-                            setIsOpen={setIsOpen} 
-                            className={`flex items-center gap-3 ${dropdownItem.color === 'amber' ? 'text-amber-400' : 'text-teal-400'}`}
-                          >
-                            {dropdownItem.icon}
-                            {dropdownItem.name}
-                          </MobileNavLink>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <MobileNavLink key={item.name} href={item.href} setIsOpen={setIsOpen}>
-                    {item.name}
-                  </MobileNavLink>
-                )
-              ))}
-
-=======
                 <MobileNavLink key={item.name} href={item.href} icon={item.icon} setIsOpen={setIsOpen}>
                   {item.name}
                 </MobileNavLink>
@@ -379,7 +254,6 @@ export default function Navbar() {
                 ))}
               </div>
 
->>>>>>> d1a5ca791608183bfcf696dcff4ee1fbcab37e82
               <div className="pt-2 border-t border-gray-800 mt-2">
                 {isLoggedIn ? (
                   <div className="space-y-2">

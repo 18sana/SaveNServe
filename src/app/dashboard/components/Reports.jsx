@@ -123,27 +123,7 @@ const Reports = () => {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-800">Farm Reports & Analytics</h2>
         <div className="flex gap-2">
-          <select 
-            value={timeRange}
-            onChange={(e) => setTimeRange(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg"
-          >
-            <option value="monthly">Monthly</option>
-            <option value="quarterly">Quarterly</option>
-            <option value="yearly">Yearly</option>
-          </select>
-          <button 
-            onClick={() => handleDownload('excel')}
-            className="px-4 py-2 bg-teal-600 text-white rounded-lg flex items-center gap-2"
-          >
-            <Download size={18} /> Export Excel
-          </button>
-          <button 
-            onClick={() => handleDownload('csv')}
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-lg flex items-center gap-2"
-          >
-            <Download size={18} /> Export CSV
-          </button>
+        
         </div>
       </div>
 

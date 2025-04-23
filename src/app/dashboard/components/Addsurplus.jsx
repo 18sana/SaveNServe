@@ -60,7 +60,7 @@ const FarmerDashboard = () => {
       status: "available", 
       location: "Farm A",
       costPerKg: "25",
-      image: "/sample-tomatoes.jpg",
+      image: "http://seed2plant.in/cdn/shop/products/tomatoseeds.jpg?v=1604033216",
       qualityGrade: "A",
       storageCondition: "Room Temperature",
       description: "Fresh organic tomatoes from greenhouse"
@@ -75,7 +75,7 @@ const FarmerDashboard = () => {
       status: "reserved", 
       location: "Farm B",
       costPerKg: "30",
-      image: "/sample-bread.jpg",
+      image: "https://media.self.com/photos/5daa23395c250800081afa68/4:3/w_2560,c_limit/sprouted-whole-grain-bread.jpg",
       qualityGrade: "B",
       storageCondition: "Dry Storage",
       description: "Day-old whole grain bread, still fresh"
@@ -509,10 +509,6 @@ const FarmerDashboard = () => {
             <div className="flex items-center">
               <div className="h-10 w-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 font-medium">
                 FP
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-900">Farm Producer</p>
-                <p className="text-xs text-gray-500">Premium Member</p>
               </div>
             </div>
           </div>

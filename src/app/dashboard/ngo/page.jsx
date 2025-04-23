@@ -453,9 +453,6 @@ const NGODashboard = () => {
         <div className="bg-white p-6 rounded-xl shadow-lg lg:col-span-2">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-medium text-gray-900">Recent Activities</h3>
-            <button className="text-sm text-blue-600 hover:text-blue-800">
-              View all
-            </button>
           </div>
           
           <div className="space-y-4">
@@ -509,62 +506,22 @@ const NGODashboard = () => {
                   <p className="font-medium">Community Kitchen</p>
                   <p className="text-sm text-gray-600">Tomorrow, 10 AM</p>
                 </div>
-                <button className="text-sm text-blue-600 hover:text-blue-800">
-                  Details
-                </button>
+               
               </div>
               <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
                 <div>
                   <p className="font-medium">School Meal Program</p>
                   <p className="text-sm text-gray-600">Jun 25, 8 AM</p>
                 </div>
-                <button className="text-sm text-green-600 hover:text-green-800">
-                  Details
-                </button>
+                
               </div>
               <div className="flex items-center justify-between p-3 bg-purple-50 rounded-lg">
                 <div>
                   <p className="font-medium">Elderly Care Center</p>
                   <p className="text-sm text-gray-600">Jun 28, 11 AM</p>
                 </div>
-                <button className="text-sm text-purple-600 hover:text-purple-800">
-                  Details
-                </button>
+               
               </div>
-            </div>
-          </div>
-          
-          <div className="bg-white p-6 rounded-xl shadow-lg">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Quick Actions</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <button 
-                onClick={() => setActiveTab("add-request")}
-                className="p-3 bg-teal-50 rounded-lg border border-teal-100 text-teal-700 hover:bg-teal-100 flex flex-col items-center"
-              >
-                <PlusCircle className="h-6 w-6 mb-1" />
-                <span className="text-sm">New Request</span>
-              </button>
-              <button 
-                onClick={() => setActiveTab("food-listings")}
-                className="p-3 bg-blue-50 rounded-lg border border-blue-100 text-blue-700 hover:bg-blue-100 flex flex-col items-center"
-              >
-                <Package className="h-6 w-6 mb-1" />
-                <span className="text-sm">Find Food</span>
-              </button>
-              <button 
-                onClick={() => setActiveTab("reports")}
-                className="p-3 bg-purple-50 rounded-lg border border-purple-100 text-purple-700 hover:bg-purple-100 flex flex-col items-center"
-              >
-                <FileText className="h-6 w-6 mb-1" />
-                <span className="text-sm">Generate Report</span>
-              </button>
-              <button 
-                onClick={() => setActiveTab("messages")}
-                className="p-3 bg-amber-50 rounded-lg border border-amber-100 text-amber-700 hover:bg-amber-100 flex flex-col items-center"
-              >
-                <MessageSquare className="h-6 w-6 mb-1" />
-                <span className="text-sm">Messages</span>
-              </button>
             </div>
           </div>
         </div>
@@ -625,7 +582,7 @@ const NGODashboard = () => {
       {/* Requests Table */}
       {filteredRequests.length === 0 ? (
         <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
-          <Inbox className="h-12 w-12 mx-auto text-gray-400" />
+          {/* <Inbox className="h-12 w-12 mx-auto text-gray-400" /> */}
           <h3 className="mt-2 text-lg font-medium text-gray-900">No requests found</h3>
           <p className="mt-1 text-sm text-gray-500">
             {activeRequestTab === 'pending'
@@ -994,156 +951,6 @@ const NGODashboard = () => {
       </div>
     </div>
   );
-
-  // const renderFoodListings = () => (
-  //   <div className="space-y-6">
-  //     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-  //       <h2 className="text-2xl font-bold text-gray-900">Available Food Listings</h2>
-  //       <div className="flex flex-col sm:flex-row gap-3">
-  //         {/* Search Bar */}
-  //         <div className="relative flex-1">
-  //           <input
-  //             type="text"
-  //             placeholder="Search by food name or type..."
-  //             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-  //             value={searchQuery}
-  //             onChange={(e) => setSearchQuery(e.target.value)}
-  //           />
-  //           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-  //             <Search className="h-5 w-5 text-gray-400" />
-  //           </div>
-  //         </div>
-  //         {/* Sort Dropdown */}
-  //         <select 
-  //           className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-  //           value={sortOption}
-  //           onChange={(e) => setSortOption(e.target.value)}
-  //         >
-  //           <option value="newest">Newest First</option>
-  //           <option value="distance">Distance</option>
-  //           <option value="quantity">Quantity</option>
-  //         </select>
-  //       </div>
-  //     </div>
-
-  //     {/* Food Listings Grid */}
-  //     {filteredFoodListings.length === 0 ? (
-  //       <div className="bg-white rounded-xl border border-gray-200 p-8 text-center">
-  //         <Package className="h-12 w-12 mx-auto text-gray-400" />
-  //         <h3 className="mt-2 text-lg font-medium text-gray-900">No food listings found</h3>
-  //         <p className="mt-1 text-sm text-gray-500">
-  //           There are currently no available food listings matching your search.
-  //         </p>
-  //       </div>
-  //     ) : (
-  //       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  //         {filteredFoodListings.map((item) => (
-  //           <div
-  //             key={item.id}
-  //             className="bg-white rounded-xl border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
-  //           >
-  //             {/* Item Image */}
-  //             <div className="relative h-48 bg-gray-100">
-  //               <img
-  //                 src={item.image || "/default-food.jpg"}
-  //                 alt={item.name}
-  //                 className="w-full h-full object-cover"
-  //               />
-  //               {/* Distance Badge */}
-  //               <span className="absolute top-3 right-3 px-2 py-1 rounded-full bg-white text-gray-800 text-xs font-medium shadow-sm">
-  //                 {item.distance} away
-  //               </span>
-  //             </div>
-
-  //             {/* Item Details */}
-  //             <div className="p-5">
-  //               <div className="flex justify-between items-start">
-  //                 <h3 className="text-lg font-medium text-gray-900">{item.name}</h3>
-  //                 <span className="bg-teal-100 text-teal-800 text-xs px-2 py-1 rounded">
-  //                   {item.type}
-  //                 </span>
-  //               </div>
-
-  //               <div className="mt-3 space-y-2">
-  //                 <div className="flex items-center text-sm text-gray-600">
-  //                   <Package className="h-4 w-4 mr-2 text-gray-400" />
-  //                   <span>
-  //                     <span className="font-medium">{item.quantity}</span> {item.unit}
-  //                   </span>
-  //                 </div>
-  //                 <div className="flex items-center text-sm text-gray-600">
-  //                   <Clock className="h-4 w-4 mr-2 text-gray-400" />
-  //                   <span>
-  //                     Expires: <span className="font-medium">{new Date(item.expiry).toLocaleDateString()}</span>
-  //                   </span>
-  //                 </div>
-  //                 <div className="flex items-center text-sm text-gray-600">
-  //                   <MapPin className="h-4 w-4 mr-2 text-gray-400" />
-  //                   <span>{item.location}</span>
-  //                 </div>
-  //                 <div className="flex items-center text-sm text-gray-600">
-  //                   <Users className="h-4 w-4 mr-2 text-gray-400" />
-  //                   <span>From: {item.farmer}</span>
-  //                 </div>
-  //               </div>
-
-  //               {/* Quality & Storage Info (Collapsible) */}
-  //               <div className="mt-4 border-t border-gray-200 pt-3">
-  //                 <button
-  //                   onClick={() => toggleRequestDetails(item.id)}
-  //                   className="flex items-center text-sm text-teal-600 hover:text-teal-700"
-  //                 >
-  //                   {expandedRequests.includes(item.id) ? (
-  //                     <>
-  //                       <ChevronDown className="h-4 w-4 mr-1 rotate-180" />
-  //                       Hide details
-  //                     </>
-  //                   ) : (
-  //                     <>
-  //                       <ChevronDown className="h-4 w-4 mr-1" />
-  //                       Show details
-  //                     </>
-  //                   )}
-  //                 </button>
-
-  //                 {expandedRequests.includes(item.id) && (
-  //                   <div className="mt-2 text-sm text-gray-600 space-y-1">
-  //                     <p>
-  //                       <span className="font-medium">Quality:</span> {item.qualityGrade}
-  //                     </p>
-  //                     <p>
-  //                       <span className="font-medium">Storage:</span> {item.storageCondition}
-  //                     </p>
-  //                     {item.description && (
-  //                       <p>
-  //                         <span className="font-medium">Notes:</span> {item.description}
-  //                       </p>
-  //                     )}
-  //                     <p>
-  //                       <span className="font-medium">Contact:</span> {item.contact}
-  //                     </p>
-  //                   </div>
-  //                 )}
-  //               </div>
-
-  //               {/* Action Buttons */}
-  //               <div className="mt-4">
-  //                 <button
-  //                   onClick={() => handleReserveFood(item.id)}
-  //                   className="w-full px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 flex items-center justify-center"
-  //                 >
-  //                   <HeartHandshake className="h-4 w-4 mr-2" />
-  //                   Reserve for Collection
-  //                 </button>
-  //               </div>
-  //             </div>
-  //           </div>
-  //         ))}
-  //       </div>
-  //     )}
-  //   </div>
-  // );
-
   const renderAIInsights = () => {
     // Additional chart data generators
     const generateBeneficiaryTrendsData = () => ({
@@ -1215,10 +1022,6 @@ const NGODashboard = () => {
               <option value="6months">Last 6 Months</option>
               <option value="12months">Last 12 Months</option>
             </select>
-            <button className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 flex items-center justify-center">
-              <Download className="w-5 h-5 mr-2" />
-              Export Report
-            </button>
           </div>
         </div>
 
@@ -1781,9 +1584,7 @@ const NGODashboard = () => {
                   <p className="mt-1 text-sm text-blue-700">
                     200kg vegetables available 5km from your community kitchen.
                   </p>
-                  <button className="mt-2 text-sm font-medium text-blue-600 hover:text-blue-800">
-                    Reserve now →
-                  </button>
+                 
                 </div>
               </div>
             </div>
@@ -1798,9 +1599,7 @@ const NGODashboard = () => {
                   <p className="mt-1 text-sm text-amber-700">
                     School meal program running low on grains - request more.
                   </p>
-                  <button className="mt-2 text-sm font-medium text-amber-600 hover:text-amber-800">
-                    Create request →
-                  </button>
+                  
                 </div>
               </div>
             </div>
@@ -1815,9 +1614,7 @@ const NGODashboard = () => {
                   <p className="mt-1 text-sm text-purple-700">
                     Elderly care center distribution scheduled for tomorrow.
                   </p>
-                  <button className="mt-2 text-sm font-medium text-purple-600 hover:text-purple-800">
-                    View details →
-                  </button>
+                  
                 </div>
               </div>
             </div>
@@ -1936,15 +1733,6 @@ const NGODashboard = () => {
             </nav>
           </div>
           <div className="p-4 border-t border-gray-200">
-            <div className="flex items-center">
-              <div className="h-10 w-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-600 font-medium">
-                NGO
-              </div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-gray-900">Hunger Relief NGO</p>
-                <p className="text-xs text-gray-500">Verified Partner</p>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -1955,7 +1743,7 @@ const NGODashboard = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      
     </>
   );
 };

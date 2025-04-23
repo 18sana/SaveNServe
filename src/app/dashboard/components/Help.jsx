@@ -133,19 +133,19 @@ const FarmerHelpCenter = () => {
         id: 1,
         title: 'Organic Farming Handbook',
         description: 'Complete guide to transitioning to organic practices',
-        type: 'pdf'
+       
       },
       {
         id: 2,
         title: 'Pest Management Guide',
         description: 'Identify and control common agricultural pests',
-        type: 'pdf'
+        
       },
       {
         id: 3,
         title: 'Market Pricing Trends',
         description: 'Annual report on commodity price fluctuations',
-        type: 'pdf'
+        
       }
     ],
     programs: [
@@ -178,12 +178,7 @@ const FarmerHelpCenter = () => {
         description: 'Tools to optimize water usage based on your crops and soil type.',
         icon: <Droplet className="h-6 w-6 text-blue-600" />
       },
-      {
-        id: 3,
-        title: 'Crop Planning',
-        description: 'Interactive tools to plan crop rotations and maximize yield.',
-        icon: <Sun className="h-6 w-6 text-green-600" />
-      }
+    
     ]
   };
 
@@ -598,7 +593,7 @@ const FarmerHelpCenter = () => {
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                       <Zap className="mr-3 text-purple-600" size={24} />
-                      Quick Response Tools
+                      
                     </h3>
                     <div className="space-y-4">
                       <div className="border border-gray-200 rounded-lg overflow-hidden">
@@ -716,7 +711,7 @@ const FarmerHelpCenter = () => {
                         <div className="flex-shrink-0 bg-teal-100 rounded-lg p-3 mr-4">
                           <MessageSquare className="h-6 w-6 text-teal-600" />
                         </div>
-                        <div>
+                        {/* <div>
                           <h4 className="font-medium text-gray-900">Live Chat</h4>
                           <p className="text-gray-600 mt-1">Chat with a support agent</p>
                           <button 
@@ -726,7 +721,7 @@ const FarmerHelpCenter = () => {
                             Start Chat
                           </button>
                           <p className="text-sm text-gray-500 mt-1">Available 9am-5pm EST</p>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
@@ -750,7 +745,7 @@ const FarmerHelpCenter = () => {
         </div>
       </div>
 
-      {/* Live Chat Modal */}
+      {/* Live Chat Modal
       {isChatOpen && (
         <div className="fixed bottom-6 right-6 w-96 bg-white rounded-xl shadow-xl border border-gray-200 z-50">
           <div className="bg-teal-600 text-white p-4 rounded-t-xl flex justify-between items-center">
@@ -798,7 +793,7 @@ const FarmerHelpCenter = () => {
             </div>
           </form>
         </div>
-      )}
+      )} */}
 
       {/* FAQ Section */}
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">

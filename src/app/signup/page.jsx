@@ -90,8 +90,8 @@ export default function signup() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <UserTypeCard
                 icon={<User className="h-6 w-6" />}
-                title="Individual"
-                description="Volunteer or donate food"
+                title="Admin"
+                description="Manage & Track"
                 selected={userType === "individual"}
                 onClick={() => setUserType("individual")}
               />

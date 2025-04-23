@@ -376,7 +376,7 @@ const DonationRequests = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">
-                        ${request.value.toLocaleString()}
+                        ₹{request.value.toLocaleString()}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -446,7 +446,7 @@ const DonationRequests = () => {
             </span>
           </div>
           <p className="mt-2 text-2xl font-bold text-green-900">
-            ${requests.filter(r => r.status === "Accepted").reduce((sum, r) => sum + r.value, 0).toLocaleString()}
+            ₹{requests.filter(r => r.status === "Accepted").reduce((sum, r) => sum + r.value, 0).toLocaleString()}
           </p>
         </div>
         
@@ -458,7 +458,7 @@ const DonationRequests = () => {
             </span>
           </div>
           <p className="mt-2 text-2xl font-bold text-yellow-900">
-            ${requests.filter(r => r.status === "Pending").reduce((sum, r) => sum + r.value, 0).toLocaleString()}
+            ₹{requests.filter(r => r.status === "Pending").reduce((sum, r) => sum + r.value, 0).toLocaleString()}
           </p>
         </div>
       </div>
